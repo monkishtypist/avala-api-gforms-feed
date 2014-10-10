@@ -4,8 +4,8 @@ Plugin Name: Gravity Forms Avala API Feed Add-On
 Plugin URI: http://www.gravityforms.com
 Description: A simple add-on to demonstrate the use of the Add-On Framework
 Version: 1.0
-Author: Rocketgenius
-Author URI: http://www.rocketgenius.com
+Author: TimS @ Ninthlink
+Author URI: http://www.ninthlink.com
 Documentation: http://www.gravityhelp.com/documentation/page/GFAddOn
 
 ------------------------------------------------------------------------
