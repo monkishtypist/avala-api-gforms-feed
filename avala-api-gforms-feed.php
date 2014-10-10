@@ -550,13 +550,17 @@ if (class_exists("GFForms")) {
             $result = array( 0 => $httpResult, 1 => $apiResult );
             //return $result;
 
+            // debug things
+            /*
             print('<pre>');
             var_dump($result);
             var_dump($entry);
             var_dump($feed);
             var_dump($jsonArray);
             var_dump($print);
-            ga_cookie('</pre>');
+            var_dump($ga_cookie);
+            print('</pre>');
+            */
             
         }
 
