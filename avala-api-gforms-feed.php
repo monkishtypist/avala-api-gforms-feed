@@ -51,7 +51,7 @@ if (class_exists("GFForms")) {
         }
 
         public function plugin_page() {
-            wp_redirect( 'admin.php?page=gf_settings&subview=avalaapifeedaddon' );
+            wp_redirect( 'admin.php?page=gf_settings&subview=Avala+API+Feed' );
         }
 
         public function feed_settings_fields() {
