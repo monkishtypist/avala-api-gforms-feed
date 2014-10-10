@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Gravity Forms Avala API Feed Add-On
+Plugin Name: Gravity Forms - Avala API Feed Add-On
 Plugin URI: http://www.gravityforms.com
 Description: A simple add-on to demonstrate the use of the Add-On Framework
 Version: 1.0
