@@ -35,8 +35,8 @@ if (class_exists("GFForms")) {
 
         protected $_version = "1.0";
         protected $_min_gravityforms_version = "1.7.9999";
-        protected $_slug = "avalaapifeedaddon";
-        protected $_path = "avalaapifeedaddon/avalaapifeedaddon.php";
+        protected $_slug = "avala-api-gforms-feed";
+        protected $_path = "avala-api-gforms-feed/avala-api-gforms-feed.php";
         protected $_full_path = __FILE__;
         protected $_title = "Gravity Forms to Avala API Feed Add-On";
         protected $_short_title = "Avala API Feed";
@@ -46,8 +46,8 @@ if (class_exists("GFForms")) {
 
         public function __construct() {
             parent::__construct();
-            $this->_custom_product_id_list = $this->get_plugin_setting('customProductIdList');
-            $this->_default_country = $this->get_plugin_setting('defaultCountry');
+            $this->_custom_product_id_list = $this->get_plugin_setting('avala_customProductIdList');
+            $this->_default_country = $this->get_plugin_setting('avala_defaultCountry');
         }
 
         public function plugin_page() {
@@ -63,14 +63,14 @@ if (class_exists("GFForms")) {
                         array(
                             "label"   => "Avala Feed Name",
                             "type"    => "text",
-                            "name"    => "feedName",
+                            "name"    => "avalaFeedName",
                             "tooltip" => "This is the tooltip",
                             "class"   => "small"
                         ),
                         array(
                             "label"   => "Submit Form to",
                             "type"    => "radio",
-                            "name"    => "apiFeedSubmit",
+                            "name"    => "avalaApiFeedSubmit",
                             "tooltip" => "Production API or Developer API for testing",
                             "choices" => array(
                                 array("label" => "Live API", "value" => 1),
@@ -81,7 +81,7 @@ if (class_exists("GFForms")) {
                         array(
                             "label"   => "Lead Source",
                             "type"    => "select",
-                            "name"    => "leadsourcename",
+                            "name"    => "avalaLeadsourcename",
                             "tooltip" => "Default Lead Source for this form",
                             "choices" => array(
                                 array("label" => get_bloginfo('name')),
@@ -124,7 +124,7 @@ if (class_exists("GFForms")) {
                         array(
                             "label"   => "Lead Category",
                             "type"    => "select",
-                            "name"    => "leadcategoryname",
+                            "name"    => "avalaLeadcategoryname",
                             "tooltip" => "Default Lead Category for this form",
                             "choices" => array(
                                 array("label" => get_bloginfo('name')),
@@ -145,7 +145,7 @@ if (class_exists("GFForms")) {
                         array(
                             "label"   => "Lead Type",
                             "type"    => "select",
-                            "name"    => "leadtypename",
+                            "name"    => "avalaLeadtypename",
                             "tooltip" => "Default Lead Category for this form",
                             "choices" => array(
                                 array("label" => get_bloginfo('name')),
@@ -173,7 +173,7 @@ if (class_exists("GFForms")) {
                             ),
                         ),
                         array(
-                            "name" => "mappedFields_Contact",
+                            "name" => "avalaMappedFields_Contact",
                             "label" => "Map Contact Fields",
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
@@ -188,7 +188,7 @@ if (class_exists("GFForms")) {
                             )
                         ),
                         array(
-                            "name" => "mappedFields_Address",
+                            "name" => "avalaMappedFields_Address",
                             "label" => "Map Address Fields",
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
@@ -202,7 +202,7 @@ if (class_exists("GFForms")) {
                             )
                         ),
                         array(
-                            "name" => "mappedFields_Subscription",
+                            "name" => "avalaMappedFields_Subscription",
                             "label" => "Map Subscription Fields",
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
@@ -213,7 +213,7 @@ if (class_exists("GFForms")) {
                             )
                         ),
                         array(
-                            "name" => "mappedFields_AddlData",
+                            "name" => "avalaMappedFields_AddlData",
                             "label" => "Map Additional Fields",
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
@@ -234,7 +234,7 @@ if (class_exists("GFForms")) {
                             ),
                         ),
                         array(
-                            "name" => "mappedFields_CustomData",
+                            "name" => "avalaMappedFields_CustomData",
                             "label" => "Map Custom Data Fields",
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
@@ -251,7 +251,7 @@ if (class_exists("GFForms")) {
                             )
                         ),
                         array(
-                            "name" => "mappedFields_WebSession",
+                            "name" => "avalaMappedFields_WebSession",
                             "label" => "Map Web Session Fields",
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
@@ -264,34 +264,34 @@ if (class_exists("GFForms")) {
                             )
                         ),
                         array(
-                            "name" => "condition",
-                            "label" => __("Conditional", "avalaapifeedaddon"),
-                            "type" => "feed_condition",
-                            "checkbox_label" => __('Enable Condition', 'avalaapifeedaddon'),
-                            "instructions" => __("Process this Avala feed if", "avalaapifeedaddon")
+                            "name" => "avalaCondition",
+                            "label" => __("Conditional", "avala-api-gforms-feed"),
+                            "type" => "feed_avalaCondition",
+                            "checkbox_label" => __('Enable Condition', 'avala-api-gforms-feed'),
+                            "instructions" => __("Process this Avala feed if", "avala-api-gforms-feed")
                         ),
                     )
                 )
             );
 
-            if ( $this->get_plugin_setting('customLeadSource') ) {
-                $custom_lead_source = explode( "\r\n", $this->get_plugin_setting('customLeadSource') );
+            if ( $this->get_plugin_setting('avala_customLeadSource') ) {
+                $custom_lead_source = explode( "\r\n", $this->get_plugin_setting('avala_customLeadSource') );
                 $a[0]['fields'][2]['choices'][] = array("label" => '--- Custom Lead Source(s) ---', "value" => '');
                 foreach ($custom_lead_source as $key => $value) {
                     $a[0]['fields'][2]['choices'][] = array("label" => $value, "value" => $value);
                 }
             }
 
-            if ( $this->get_plugin_setting('customLeadCategory') ) {
-                $custom_lead_category = explode( "\r\n", $this->get_plugin_setting('customLeadCategory') );
+            if ( $this->get_plugin_setting('avala_customLeadCategory') ) {
+                $custom_lead_category = explode( "\r\n", $this->get_plugin_setting('avala_customLeadCategory') );
                 $a[0]['fields'][3]['choices'][] = array("label" => '--- Custom Lead Category(s) ---', "value" => '');
                 foreach ($custom_lead_category as $key => $value) {
                     $a[0]['fields'][3]['choices'][] = array("label" => $value, "value" => $value);
                 }
             }
 
-            if ( $this->get_plugin_setting('customLeadType') ) {
-                $custom_lead_type = explode( "\r\n", $this->get_plugin_setting('customLeadType') );
+            if ( $this->get_plugin_setting('avala_customLeadType') ) {
+                $custom_lead_type = explode( "\r\n", $this->get_plugin_setting('avala_customLeadType') );
                 $a[0]['fields'][4]['choices'][] = array("label" => '--- Custom Lead Type(s) ---', "value" => '');
                 foreach ($custom_lead_type as $key => $value) {
                     $a[0]['fields'][4]['choices'][] = array("label" => $value, "value" => $value);
@@ -303,11 +303,11 @@ if (class_exists("GFForms")) {
 
         protected function feed_list_columns() {
             return array(
-                'feedName' => __('Name', 'avalaapifeedaddon'),
-                'apiFeedSubmit' => __('API Status', 'avalaapifeedaddon'),
-                'leadsourcename' => __('Lead Source', 'avalaapifeedaddon'),
-                'leadcategoryname' => __('Lead Category', 'avalaapifeedaddon'),
-                'leadtypename' => __('Lead Type', 'avalaapifeedaddon'),
+                'avalaFeedName' => __('Name', 'avala-api-gforms-feed'),
+                'avalaApiFeedSubmit' => __('API Status', 'avala-api-gforms-feed'),
+                'avalaLeadsourcename' => __('Lead Source', 'avala-api-gforms-feed'),
+                'avalaLeadcategoryname' => __('Lead Category', 'avala-api-gforms-feed'),
+                'avalaLeadtypename' => __('Lead Type', 'avala-api-gforms-feed'),
             );
         }
 
@@ -321,56 +321,56 @@ if (class_exists("GFForms")) {
                     "title"  => "Avala API Settings",
                     "fields" => array(
                         array(
-                            "name"    => "liveApiUrl",
+                            "name"    => "avala_liveApiUrl",
                             "tooltip" => "URL for production CURL submits",
                             "label"   => "Live API URL",
                             "type"    => "text",
                             "class"   => "medium"
                         ),
                         array(
-                            "name"    => "devApiUrl",
+                            "name"    => "avala_devApiUrl",
                             "tooltip" => "URL for development CURL submits",
                             "label"   => "Dev API URL",
                             "type"    => "text",
                             "class"   => "medium"
                         ),
                         array(
-                            "name"    => "customLeadCategory",
+                            "name"    => "avala_customLeadCategory",
                             "tooltip" => "Add your own Lead Category(ies), one per line",
                             "label"   => "Custom Lead Category(ies)",
                             "type"    => "textarea",
                             "class"   => "small"
                         ),
                         array(
-                            "name"    => "customLeadSource",
+                            "name"    => "avala_customLeadSource",
                             "tooltip" => "Add your own Lead Source(s), one per line",
                             "label"   => "Custom Lead Source(s)",
                             "type"    => "textarea",
                             "class"   => "small"
                         ),
                         array(
-                            "name"    => "customLeadType",
+                            "name"    => "avala_customLeadType",
                             "tooltip" => "Add your own Lead Type(s), one per line",
                             "label"   => "Custom Lead Type(s)",
                             "type"    => "textarea",
                             "class"   => "small"
                         ),
                         array(
-                            "name"    => "customProductIdList",
+                            "name"    => "avala_customProductIdList",
                             "tooltip" => "Add Product List in the form of<br />\"Product Name, Product ID#\"<br />(without quotes), one per line<br />Adds custom advanced field if used",
                             "label"   => "Product ID List",
                             "type"    => "textarea",
                             "class"   => "small"
                         ),
                         array(
-                            "name"    => "defaultOptInListId",
+                            "name"    => "avala_defaultOptInListId",
                             "tooltip" => "ID(s) used for opt-in lists (provided by Avala)<br />Comma seperated values",
                             "label"   => "Opt-In List ID(s)",
                             "type"    => "text",
                             "class"   => "small"
                         ),
                         array(
-                            "name"    => "defaultCountry",
+                            "name"    => "avala_defaultCountry",
                             "tooltip" => "Lead country will default to this value if no user entry<br/>Uses \"US\" if this field left blank",
                             "label"   => "Default Country",
                             "type"    => "radio",
@@ -381,7 +381,7 @@ if (class_exists("GFForms")) {
                             )
                         ),
                         array(
-                            "name"    => "defaultPostalCode",
+                            "name"    => "avala_defaultPostalCode",
                             "tooltip" => "Default postal code to be used if no user entry<br />Uses \"00000\" if this field left blank",
                             "label"   => "Default Postal Code",
                             "type"    => "text",
@@ -400,14 +400,14 @@ if (class_exists("GFForms")) {
                       "deps"    => array("jquery"),
                       // [strings] An array of strings that can be accessed in JavaScript through the global variable [script handle]_strings
                       "strings" => array(
-                          'first'  => __("First Choice", "avalaapifeedaddon"),
-                          'second' => __("Second Choice", "avalaapifeedaddon"),
-                          'third'  => __("Third Choice", "avalaapifeedaddon")
+                          'first'  => __("First Choice", "avala-api-gforms-feed"),
+                          'second' => __("Second Choice", "avala-api-gforms-feed"),
+                          'third'  => __("Third Choice", "avala-api-gforms-feed")
                       ),
                       "enqueue" => array(
                           array(
                               "admin_page" => array("form_settings"),
-                              "tab"        => "avalaapifeedaddon"
+                              "tab"        => "avala-api-gforms-feed"
                           )
                       )
                 ),
@@ -434,15 +434,15 @@ if (class_exists("GFForms")) {
 
         public function process_feed($feed, $entry, $form){
 
-            $apiFeedSubmit = $feed['meta']['apiFeedSubmit'];
+            $avalaApiFeedSubmit = $feed['meta']['avalaApiFeedSubmit'];
             $url = null;
 
-            if ( $apiFeedSubmit == 0 ) :
+            if ( $avalaApiFeedSubmit == 0 ) :
                 return false; // do nothing
-            elseif ( $apiFeedSubmit == 1 ) :
-                $url = $this->get_plugin_setting('liveApiUrl'); // submit to live
+            elseif ( $avalaApiFeedSubmit == 1 ) :
+                $url = $this->get_plugin_setting('avala_liveApiUrl'); // submit to live
             else :
-                $url = $this->get_plugin_setting('devApiUrl'); // submit to dev
+                $url = $this->get_plugin_setting('avala_devApiUrl'); // submit to dev
             endif;
 
             if ( isset($_COOKIE['__utmz']) && !empty($_COOKIE['__utmz']) )
@@ -450,9 +450,9 @@ if (class_exists("GFForms")) {
 
 
             $jsonArray = array(
-                'LeadSourceName'                => $feed['meta']['leadsourcename'],
-                'LeadTypeName'                  => $feed['meta']['leadtypename'],
-                'LeadCategoryName'              => $feed['meta']['leadcategoryname'],
+                'LeadSourceName'                => $feed['meta']['avalaLeadsourcename'],
+                'LeadTypeName'                  => $feed['meta']['avalaLeadtypename'],
+                'LeadCategoryName'              => $feed['meta']['avalaLeadcategoryname'],
                 //mapped fields - contact
                 'FirstName'                     => '',
                 'LastName'                      => '',
@@ -468,8 +468,8 @@ if (class_exists("GFForms")) {
                 'State'                         => '',
                 'County'                        => '',
                 'District'                      => '',
-                'CountryCode'                   => $this->get_plugin_setting('defaultCountry'),
-                'PostalCode'                    => ( $this->get_plugin_setting('defaultPostalCode') != '' ) ? $this->get_plugin_setting('defaultPostalCode') : '00000',
+                'CountryCode'                   => $this->get_plugin_setting('avala_defaultCountry'),
+                'PostalCode'                    => ( $this->get_plugin_setting('avala_defaultPostalCode') != '' ) ? $this->get_plugin_setting('avala_defaultPostalCode') : '00000',
                 //mapped fields - subscription
                 'RecieveEmailCampaigns'         => '',
                 'ReceiveNewsletter'             => '',
@@ -482,7 +482,7 @@ if (class_exists("GFForms")) {
                 'DealerId'                      => '',
                 'DealerNumber'                  => '',
                 'Event'                         => '',
-                'ExactTargetOptInListIds'       => ( $this->get_plugin_setting('defaultOptInListId') ) ? $this->get_plugin_setting('defaultOptInListId') : '',
+                'ExactTargetOptInListIds'       => ( $this->get_plugin_setting('avala_defaultOptInListId') ) ? $this->get_plugin_setting('avala_defaultOptInListId') : '',
                 'ExactTargetCustomAttributes'   => '',
                 'LeadDate'                      => '',
                 'ProductCode'                   => '',
@@ -565,7 +565,7 @@ if (class_exists("GFForms")) {
         }
 
         // helper functions
-        function parse_ga_cookie($cookie) {
+        public function parse_ga_cookie($cookie) {
             $values = sscanf( $cookie, "%d.%d.%d.%d.utmcsr=%[^|]|utmccn=%[^|]|utmcmd=%[^|]|utmctr=%[^|]");
             $keys = array('domain', 'timestamp', 'visits', 'sources', 'campaign', 'source', 'medium', 'keyword');
             return array_combine($keys, $values);
@@ -735,17 +735,17 @@ if (class_exists("GFForms")) {
                 if($group["name"] == "advanced_fields"){
                     $group["fields"][] = array(
                         "class"=>"button avala-button",
-                        "value" => __("Select Product", "avalaapifeedaddon"),
+                        "value" => __("Select Product", "avala-api-gforms-feed"),
                         "onclick" => "StartAddField('avalaFieldProductId');"
                         );
                     $group["fields"][] = array(
                         "class"=>"button avala-button",
-                        "value" => __("Buy Timeframe", "avalaapifeedaddon"),
+                        "value" => __("Buy Timeframe", "avala-api-gforms-feed"),
                         "onclick" => "StartAddField('avalaFieldPurchaseTimeframe');"
                         );
                     $group["fields"][] = array(
                         "class"=>"button avala-button",
-                        "value" => __("Product Use", "avalaapifeedaddon"),
+                        "value" => __("Product Use", "avala-api-gforms-feed"),
                         "onclick" => "StartAddField('avalaFieldProductUse');"
                         );
                     break;
@@ -761,13 +761,13 @@ if (class_exists("GFForms")) {
         function avala_field_titles( $type ) {
             switch( $type ) {
                 case 'avalaFieldProductUse':
-                    return __( 'Select Product Use' , 'avalaapifeedaddon' );
+                    return __( 'Select Product Use' , 'avala-api-gforms-feed' );
                     break;
                 case 'avalaFieldPurchaseTimeframe':
-                    return __( 'Select Purchase Timeframe' , 'avalaapifeedaddon' );
+                    return __( 'Select Purchase Timeframe' , 'avala-api-gforms-feed' );
                     break;
                 case 'avalaFieldProductId':
-                    return __( 'Select Product ID' , 'avalaapifeedaddon' );
+                    return __( 'Select Product ID' , 'avala-api-gforms-feed' );
                     break;
             }
         }
@@ -779,9 +779,9 @@ if (class_exists("GFForms")) {
             ?>
             <script type='text/javascript'>
                 jQuery(document).ready(function($){
-                    fieldSettings["avalaFieldProductId"] = ".label_setting, .description_setting, .admin_label_setting, .size_setting, .error_message_setting, .css_class_setting, .visibility_setting, .conditional_logic_field_setting";
-                    fieldSettings["avalaFieldProductUse"] = ".label_setting, .description_setting, .admin_label_setting, .size_setting, .error_message_setting, .css_class_setting, .visibility_setting, .conditional_logic_field_setting";
-                    fieldSettings["avalaFieldPurchaseTimeframe"] = ".label_setting, .description_setting, .admin_label_setting, .size_setting, .error_message_setting, .css_class_setting, .visibility_setting, .conditional_logic_field_setting";
+                    fieldSettings["avalaFieldProductId"] = ".label_setting, .description_setting, .admin_label_setting, .size_setting, .error_message_setting, .css_class_setting, .visibility_setting, .avalaConditional_logic_field_setting";
+                    fieldSettings["avalaFieldProductUse"] = ".label_setting, .description_setting, .admin_label_setting, .size_setting, .error_message_setting, .css_class_setting, .visibility_setting, .avalaConditional_logic_field_setting";
+                    fieldSettings["avalaFieldPurchaseTimeframe"] = ".label_setting, .description_setting, .admin_label_setting, .size_setting, .error_message_setting, .css_class_setting, .visibility_setting, .avalaConditional_logic_field_setting";
                 });
             </script>
             <?php
