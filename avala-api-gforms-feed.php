@@ -257,16 +257,16 @@ if (class_exists("GFForms")) {
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
                             "field_map" => array(
                                 array("name" => "DeliveryMethod","label" => "Delivery Method","required" => 0),
-                                array("name" => "KeyWords","label" => "Key Words","required" => 0),
-                                array("name" => "PagesViewed","label" => "Pages Viewed","required" => 0),
-                                array("name" => "PageViews","label" => "Page Views","required" => 0),
-                                array("name" => "TimeOnSite","label" => "Time On Site","required" => 0),
+                                //array("name" => "KeyWords","label" => "Key Words","required" => 0),
+                                //array("name" => "PagesViewed","label" => "Pages Viewed","required" => 0),
+                                //array("name" => "PageViews","label" => "Page Views","required" => 0),
+                                //array("name" => "TimeOnSite","label" => "Time On Site","required" => 0),
                             )
                         ),
                         array(
                             "name" => "avalaCondition",
                             "label" => __("Conditional", "avala-api-gforms-feed"),
-                            "type" => "feed_avalaCondition",
+                            "type" => "feed_condition",
                             "checkbox_label" => __('Enable Condition', 'avala-api-gforms-feed'),
                             "instructions" => __("Process this Avala feed if", "avala-api-gforms-feed")
                         ),
@@ -519,7 +519,7 @@ if (class_exists("GFForms")) {
 
             foreach ($feed['meta'] as $k => $v) {
                 $l = explode("_", $k);
-                if ( $l[0] == 'mappedFields' ) {
+                if ( $l[0] == 'avalaMappedFields' ) {
                     if ( $l[1] == 'CustomData' && array_key_exists( $l[2], $jsonArray['CustomData'] ) && !empty( $v ) ) :
                         $jsonArray['CustomData'][ $l[2] ] = $entry[ $v ];
                     elseif ( $l[1] == 'WebSession' && array_key_exists( $l[2], $jsonArray['WebSessionData'] ) && !empty( $v ) ) :
@@ -528,6 +528,25 @@ if (class_exists("GFForms")) {
                         $jsonArray[ $l[2] ] = $entry[ $v ];
                     endif;
                 }
+            }
+
+            if ( !empty( $_COOKIE['__nlkpv'] ) ) {
+                $nlkc =  json_decode( str_replace('\"', '"', $_COOKIE['__nlkpv'] ), true );
+                var_dump($nlkc);
+                $i = 0;
+                $li = '';
+                foreach ($nlkc as $k => $v) {
+                    $li .= '<li><a href="'.$v['url'].'">'.$v['title'].'</a></li>';
+                    $i++;
+                }
+                $jsonArray['WebSessionData']['PagesViewed'] = sprintf( '<ul>%s</ul>', $li );
+                $jsonArray['WebSessionData']['PageViews'] = $i;
+            }
+            if ( !empty( $_COOKIE['__nlken'] ) ) {
+                $then = $_COOKIE['__nlken'];
+                $now = time();
+                $tos = $now - $then;
+                $jsonArray['WebSessionData']['TimeOnSite'] = gmdate("H:i:s", $tos);
             }
             
             // Remove empty ARRAY fields so we do not submit blank data
@@ -551,16 +570,15 @@ if (class_exists("GFForms")) {
             //return $result;
 
             // debug things
-            /*
+            
             print('<pre>');
             var_dump($result);
-            var_dump($entry);
-            var_dump($feed);
+            //var_dump($entry);
+            //var_dump($feed);
             var_dump($jsonArray);
-            var_dump($print);
-            var_dump($ga_cookie);
+            //var_dump($ga_cookie);
             print('</pre>');
-            */
+            
             
         }
 
