@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name: Gravity Forms - Avala API Feed Add-On
-Plugin URI: http://www.gravityforms.com
-Description: A simple add-on to demonstrate the use of the Add-On Framework
+Plugin Name: Gravity Forms - Avala API Add-On
+Plugin URI: http://www.ninthlink.com
+Description: A Gravity Forms add-on to connect GForms submits to Avala Aimbase CRM
 Version: 1.0
 Author: TimS @ Ninthlink
 Author URI: http://www.ninthlink.com
 Documentation: http://www.gravityhelp.com/documentation/page/GFAddOn
 
 ------------------------------------------------------------------------
-Copyright 2012-2013 Rocketgenius Inc.
+Copyright 2014 Ninthlink, Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 */
 
+//exit if accessed directly
+if(!defined('ABSPATH')) exit;
 
 //------------------------------------------
 if (class_exists("GFForms")) {
@@ -38,24 +40,63 @@ if (class_exists("GFForms")) {
         protected $_slug = "avala-api-gforms-feed";
         protected $_path = "avala-api-gforms-feed/avala-api-gforms-feed.php";
         protected $_full_path = __FILE__;
-        protected $_title = "Gravity Forms to Avala API Feed Add-On";
-        protected $_short_title = "Avala API Feed";
+        protected $_title = "Avala API Plugin Settings";
+        protected $_short_title = "Avala API";
 
+        // custom data vars for use outside class
+        // these will be access when creating cutom GForm Fields below
         public $_custom_product_id_list = array();
         public $_default_country = 'US';
 
+        // constructor to assign plugin setting data to custom vars above
         public function __construct() {
             parent::__construct();
             $this->_custom_product_id_list = $this->get_plugin_setting('avala_customProductIdList');
             $this->_default_country = $this->get_plugin_setting('avala_defaultCountry');
         }
 
+        // Plugin Settings Page :: Forms -> Avala API Feed
         public function plugin_page() {
-            wp_redirect( 'admin.php?page=gf_settings&subview=Avala+API+Feed' );
+            ?>
+            <p>Avala API Settings are handled within Gravity Forms settings page at:<br />
+                <b>Forms</b> -> <b>Settings</b> -> <b>Avala API</b>
+            </p>
+            <h2>How to use this plugin</h2>
+            <h3>A step-by-step guide</h3>
+            <ol>
+                <li>Update Plugin Settings by going to "Forms -> Settings -> Avala API"<br>
+                    You will need the following:
+                    <ul style="margin-left: 20px;">
+                        <li>Aimbase submit URL(s) - live and/or QA</li>
+                        <li>Any custom lead categories, sources, and types not included in this plugin defaults</li>
+                        <li>Your product ID list - this can be exported directly from Aimbase</li>
+                        <li>Any opt-in list ID(s)</li>
+                    </ul>
+                </li>
+                <li>Create your forms</li>
+                <li>Add custom Feeds to your form<br />
+                    From the form edit/view page, go to "My Form -> Form Settings -> Avala API Feeds"</li>
+                <li>Click "Add New" to create a new feed</li>
+                <li>Update your feed settings per your requirements</li>
+                <li>Map necessary form fields to your Avala fields to be submitted - some fields are required</li>
+                <li>Set up a feed submit condition as necessary</li>
+                <li>Save your changes! You are all set</li>
+            </ol>
+            <h3>Why do I need conditions for my feeds?</h3>
+            <p>A new feed must be created for every variation of form submit. Conditionals allow you to pick and choose which feed will be used at which time, for example if you are changing lead source based on entry.</p>
+            <?php
+            //wp_redirect( 'admin.php?page=gf_settings&subview=Avala+API+Feed' );
         }
 
+        /**
+         *  Feed Settings Fields
+         *
+         *  Each form uses unique feed settings to connect with Avala. This allows extra refining for each circumstance
+         *
+         **/
         public function feed_settings_fields() {
             
+            // array of settings fields
             $a = array(
                 array(
                     "title"  => "Avala API Settings",
@@ -274,6 +315,7 @@ if (class_exists("GFForms")) {
                 )
             );
 
+            // add Custom Lead Source plugin settings field to feed settings field array
             if ( $this->get_plugin_setting('avala_customLeadSource') ) {
                 $custom_lead_source = explode( "\r\n", $this->get_plugin_setting('avala_customLeadSource') );
                 $a[0]['fields'][2]['choices'][] = array("label" => '--- Custom Lead Source(s) ---', "value" => '');
@@ -282,6 +324,7 @@ if (class_exists("GFForms")) {
                 }
             }
 
+            // add Custom Lead Category plugin settings field to feed settings field array
             if ( $this->get_plugin_setting('avala_customLeadCategory') ) {
                 $custom_lead_category = explode( "\r\n", $this->get_plugin_setting('avala_customLeadCategory') );
                 $a[0]['fields'][3]['choices'][] = array("label" => '--- Custom Lead Category(s) ---', "value" => '');
@@ -290,6 +333,7 @@ if (class_exists("GFForms")) {
                 }
             }
 
+            // add Custom Lead Type plugin settings field to feed settings field array
             if ( $this->get_plugin_setting('avala_customLeadType') ) {
                 $custom_lead_type = explode( "\r\n", $this->get_plugin_setting('avala_customLeadType') );
                 $a[0]['fields'][4]['choices'][] = array("label" => '--- Custom Lead Type(s) ---', "value" => '');
@@ -301,20 +345,35 @@ if (class_exists("GFForms")) {
             return $a;
         }
 
+        /**
+         *  Columns displayed on Feed overview / list page
+         *
+         **/
         protected function feed_list_columns() {
             return array(
                 'avalaFeedName' => __('Name', 'avala-api-gforms-feed'),
-                'avalaApiFeedSubmit' => __('API Status', 'avala-api-gforms-feed'),
+                'avalaApiFeedSubmit' => __('Submit To', 'avala-api-gforms-feed'),
                 'avalaLeadsourcename' => __('Lead Source', 'avala-api-gforms-feed'),
                 'avalaLeadcategoryname' => __('Lead Category', 'avala-api-gforms-feed'),
                 'avalaLeadtypename' => __('Lead Type', 'avala-api-gforms-feed'),
             );
         }
 
-        public function get_column_value_mytextbox($feed) {
-            return "<b>" . $feed["meta"]["mytextbox"] ."</b>";
+        /**
+         *  Change numeric field to textual output on overview page for human readability
+         *
+         **/
+        public function get_column_value_avalaApiFeedSubmit($feed) {
+            $output = ( $feed["meta"]["avalaApiFeedSubmit"] == 1 ) ? 'Live' : ( ( $feed["meta"]["avalaApiFeedSubmit"] == 2 ) ? 'Dev' : 'N/A' );
+            return "<b>" . $output ."</b>";
         }
 
+        /**
+         *  Plugin Settings Fields
+         *
+         *  These setting apply to entire plugin, not just individual feeds
+         *
+         **/
         public function plugin_settings_fields() {
             return array(
                 array(
@@ -387,11 +446,28 @@ if (class_exists("GFForms")) {
                             "type"    => "text",
                             "class"   => "small"
                         ),
+                        array(
+                            "name"    => "avala_debugMode",
+                            "tooltip" => "Show debug arrays on all form submits",
+                            "label"   => "Debug Mode",
+                            "type"    => "radio",
+                            "class"   => "small",
+                            "choices" => array(
+                                array("label" => "On", "value" => "1"),
+                                array("label" => "Off", "value" => "0"),
+                            ),
+                        ),
                     ),
                 ),
             );
         }
 
+        /**
+         *  Plugin Scripts
+         *
+         *  Call scripts that we may want to run on form pages
+         *
+         **/
         public function scripts() {
             $scripts = array(
                 array("handle"  => "avala_api_script_js",
@@ -417,9 +493,17 @@ if (class_exists("GFForms")) {
             return array_merge(parent::scripts(), $scripts);
         }
 
+        /**
+         *  Plugin Styles
+         *
+         *  Call styles that we may want apply on form pages
+         *
+         **/
         public function styles() {
 
             $styles = array(
+                // call style on the admin page: form-editor
+                // for example, in this case we change the color of Avala specific advanced form fields (for differentiation)
                 array("handle"  => "avala_api_styles_form_edit_css",
                       "src"     => $this->get_base_url() . "/css/avala_api_styles_form_edit.css",
                       "version" => $this->_version,
@@ -432,23 +516,33 @@ if (class_exists("GFForms")) {
             return array_merge(parent::styles(), $styles);
         }
 
+        /**
+         *  Feed Processor
+         *
+         *  This is the nuts and bolts: all actions to happen on form submit happen here
+         *  Feed processing happens after submit, but before page redirect/thanks message
+         *
+         **/
         public function process_feed($feed, $entry, $form){
 
+            // working vars
             $avalaApiFeedSubmit = $feed['meta']['avalaApiFeedSubmit'];
             $url = null;
 
-            if ( $avalaApiFeedSubmit == 0 ) :
-                return false; // do nothing
-            elseif ( $avalaApiFeedSubmit == 1 ) :
+            // get submit to location (exit if none)
+            if ( $avalaApiFeedSubmit == 1 ) :
                 $url = $this->get_plugin_setting('avala_liveApiUrl'); // submit to live
-            else :
+            elseif ( $avalaApiFeedSubmit == 2 ) :
                 $url = $this->get_plugin_setting('avala_devApiUrl'); // submit to dev
+            else :
+                return false; // do nothing - GForm submits as normal without Avala API
             endif;
 
+            // we will use Google Analytics cookies for some data if available
             if ( isset($_COOKIE['__utmz']) && !empty($_COOKIE['__utmz']) )
                 $ga_cookie = $this->parse_ga_cookie( $_COOKIE['__utmz'] );
 
-
+            // The full array of data that will be translated into Avala API data
             $jsonArray = array(
                 'LeadSourceName'                => $feed['meta']['avalaLeadsourcename'],
                 'LeadTypeName'                  => $feed['meta']['avalaLeadtypename'],
@@ -514,9 +608,8 @@ if (class_exists("GFForms")) {
                     'VisitCount'                => ( isset($ga_cookie['visits']) && !empty($ga_cookie['visits']) ) ? $ga_cookie['visits'] : 1,
                     ),
             );
-    
-            $avala_field = array();
 
+            // iterate over meta data mapped fields (from feed fields) and apply to the big array above
             foreach ($feed['meta'] as $k => $v) {
                 $l = explode("_", $k);
                 if ( $l[0] == 'avalaMappedFields' ) {
@@ -530,9 +623,9 @@ if (class_exists("GFForms")) {
                 }
             }
 
+            // Custom cookie reader :: requires "nlk-custom-shortcodes" plugin to generate these tracking cookies
             if ( !empty( $_COOKIE['__nlkpv'] ) ) {
                 $nlkc =  json_decode( str_replace('\"', '"', $_COOKIE['__nlkpv'] ), true );
-                var_dump($nlkc);
                 $i = 0;
                 $li = '';
                 foreach ($nlkc as $k => $v) {
@@ -553,9 +646,11 @@ if (class_exists("GFForms")) {
             $jsonArray['CustomData'] = array_filter( $jsonArray['CustomData'] );
             $jsonArray['WebSessionData'] = array_filter( $jsonArray['WebSessionData'] );
             $jsonArray = array_filter( $jsonArray );
-            
+
+            // wrap string in [ ] per Avala API requirements
             $jsonString = '[' . json_encode( $jsonArray ) . ']';
 
+            // cURL :: this sends off the data to Avala
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonString);
@@ -567,28 +662,35 @@ if (class_exists("GFForms")) {
             $httpResult = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
             $result = array( 0 => $httpResult, 1 => $apiResult );
-            //return $result;
 
             // debug things
-            
-            print('<pre>');
-            var_dump($result);
-            //var_dump($entry);
-            //var_dump($feed);
-            var_dump($jsonArray);
-            //var_dump($ga_cookie);
-            print('</pre>');
-            
+            if ( $this->get_plugin_setting('avala_debugOptions') ) {
+                print('<pre>');
+                var_dump($result);
+                //var_dump($entry);
+                //var_dump($feed);
+                var_dump($jsonArray);
+                //var_dump($ga_cookie);
+                print('</pre>');
+            }
             
         }
 
-        // helper functions
+        /**
+         *  helper functions
+         *
+         *  Useful functions for parsing data, formatting, etc.
+         *
+         **/
+
+        // Google Analytics cookie parser
         public function parse_ga_cookie($cookie) {
             $values = sscanf( $cookie, "%d.%d.%d.%d.utmcsr=%[^|]|utmccn=%[^|]|utmcmd=%[^|]|utmctr=%[^|]");
             $keys = array('domain', 'timestamp', 'visits', 'sources', 'campaign', 'source', 'medium', 'keyword');
             return array_combine($keys, $values);
         }
 
+        // Phone number formatter
         public function format_phone( $phone = '', $format='standard', $convert = true, $trim = true ) {
             if ( empty( $phone ) ) {
                 return false;
@@ -666,17 +768,25 @@ if (class_exists("GFForms")) {
             }
         }
 
+        /**
+         *  END of AVAL API ADD-ON CLASS
+         *
+         **/
     }
 
-    // Instantiate the class
+
+
+    // Instantiate the class - this triggers everything, makes the magic happen
     $gfa = new GFAvalaAPIAddOn();
 
 
     /**
-     *  Custom Form Fields
+     *  Custom Gravity Form Fields
+     *
+     *  The following fields added are Avala specific fields
      *
      **/
-
+    if ( $gfa ) {
         /**
          *  Product ID List - Custom Advanced Field
          *
@@ -742,10 +852,8 @@ if (class_exists("GFForms")) {
             return $input;
         }
 
-        
-
         /**
-         *  This code adds a new button to Advanced Fields section in form creator
+         *  This code adds new buttons to the Advanced Fields section in form creator
          */
         add_filter("gform_add_field_buttons", "add_avala_product_id_field");
         function add_avala_product_id_field($field_groups){
@@ -789,6 +897,7 @@ if (class_exists("GFForms")) {
                     break;
             }
         }
+
         /*
          *  Javascript technicalitites for the field to load correctly and to display default/custom field options
          */
@@ -804,9 +913,12 @@ if (class_exists("GFForms")) {
             </script>
             <?php
         }
+    }
 
 
-    // Rewrite Country select values as Country Codes instead of country name
+    // Rewrite Gravity Forms field Country (select values) as Country Codes instead of country name :: eg CA instead of Canada
+    // This is necessary for Avala API to understand data
+    // An alternative would be to use a filter function to do this during Feed Processing, but here we can also set US and CA as our top two choices
     add_filter("gform_countries", "change_countries");
     function change_countries($countries){
         return array( "US" => __('UNITED STATES', 'gravityforms'), "CA" => __('CANADA', 'gravityforms'), "00" => __('---', 'gravityforms'), "AF" => __('AFGHANISTAN', 'gravityforms'), "AL" => __('ALBANIA', 'gravityforms'), "DZ" => __('ALGERIA', 'gravityforms'), "AS" => __('AMERICAN SAMOA', 'gravityforms'), "AD" => __('ANDORRA', 'gravityforms'), "AO" => __('ANGOLA', 'gravityforms'), "AG" => __('ANTIGUA AND BARBUDA', 'gravityforms'), "AR" => __('ARGENTINA', 'gravityforms'), "AM" => __('ARMENIA', 'gravityforms'), "AU" => __('AUSTRALIA', 'gravityforms'), "AT" => __('AUSTRIA', 'gravityforms'), "AZ" => __('AZERBAIJAN', 'gravityforms'), "BS" => __('BAHAMAS', 'gravityforms'), "BH" => __('BAHRAIN', 'gravityforms'), "BD" => __('BANGLADESH', 'gravityforms'), "BB" => __('BARBADOS', 'gravityforms'), "BY" => __('BELARUS', 'gravityforms'), "BE" => __('BELGIUM', 'gravityforms'), "BZ" => __('BELIZE', 'gravityforms'), "BJ" => __('BENIN', 'gravityforms'), "BM" => __('BERMUDA', 'gravityforms'), "BT" => __('BHUTAN', 'gravityforms'), "BO" => __('BOLIVIA', 'gravityforms'), "BA" => __('BOSNIA AND HERZEGOVINA', 'gravityforms'), "BW" => __('BOTSWANA', 'gravityforms'), "BR" => __('BRAZIL', 'gravityforms'), "BN" => __('BRUNEI', 'gravityforms'), "BG" => __('BULGARIA', 'gravityforms'), "BF" => __('BURKINA FASO', 'gravityforms'), "BI" => __('BURUNDI', 'gravityforms'), "KH" => __('CAMBODIA', 'gravityforms'), "CM" => __('CAMEROON', 'gravityforms'), "CA" => __('CANADA', 'gravityforms'), "CV" => __('CAPE VERDE', 'gravityforms'), "KY" => __('CAYMAN ISLANDS', 'gravityforms'), "CF" => __('CENTRAL AFRICAN REPUBLIC', 'gravityforms'), "TD" => __('CHAD', 'gravityforms'), "CL" => __('CHILE', 'gravityforms'), "CN" => __('CHINA', 'gravityforms'), "CO" => __('COLOMBIA', 'gravityforms'), "KM" => __('COMOROS', 'gravityforms'), "CD" => __('CONGO, DEMOCRATIC REPUBLIC OF THE', 'gravityforms'), "CG" => __('CONGO, REPUBLIC OF THE', 'gravityforms'), "CR" => __('COSTA RICA', 'gravityforms'), "CI" => __('C&OCIRC;TE D\'IVOIRE', 'gravityforms'), "HR" => __('CROATIA', 'gravityforms'), "CU" => __('CUBA', 'gravityforms'), "CY" => __('CYPRUS', 'gravityforms'), "CZ" => __('CZECH REPUBLIC', 'gravityforms'), "DK" => __('DENMARK', 'gravityforms'), "DJ" => __('DJIBOUTI', 'gravityforms'), "DM" => __('DOMINICA', 'gravityforms'), "DO" => __('DOMINICAN REPUBLIC', 'gravityforms'), "TL" => __('EAST TIMOR', 'gravityforms'), "EC" => __('ECUADOR', 'gravityforms'), "EG" => __('EGYPT', 'gravityforms'), "SV" => __('EL SALVADOR', 'gravityforms'), "GQ" => __('EQUATORIAL GUINEA', 'gravityforms'), "ER" => __('ERITREA', 'gravityforms'), "EE" => __('ESTONIA', 'gravityforms'), "ET" => __('ETHIOPIA', 'gravityforms'), "FJ" => __('FIJI', 'gravityforms'), "FI" => __('FINLAND', 'gravityforms'), "FR" => __('FRANCE', 'gravityforms'), "GA" => __('GABON', 'gravityforms'), "GM" => __('GAMBIA', 'gravityforms'), "GE" => __('GEORGIA', 'gravityforms'), "DE" => __('GERMANY', 'gravityforms'), "GH" => __('GHANA', 'gravityforms'), "GR" => __('GREECE', 'gravityforms'), "GL" => __('GREENLAND', 'gravityforms'), "GD" => __('GRENADA', 'gravityforms'), "GU" => __('GUAM', 'gravityforms'), "GT" => __('GUATEMALA', 'gravityforms'), "GN" => __('GUINEA', 'gravityforms'), "GW" => __('GUINEA-BISSAU', 'gravityforms'), "GY" => __('GUYANA', 'gravityforms'), "HT" => __('HAITI', 'gravityforms'), "HN" => __('HONDURAS', 'gravityforms'), "HK" => __('HONG KONG', 'gravityforms'), "HU" => __('HUNGARY', 'gravityforms'), "IS" => __('ICELAND', 'gravityforms'), "IN" => __('INDIA', 'gravityforms'), "ID" => __('INDONESIA', 'gravityforms'), "IR" => __('IRAN', 'gravityforms'), "IQ" => __('IRAQ', 'gravityforms'), "IE" => __('IRELAND', 'gravityforms'), "IL" => __('ISRAEL', 'gravityforms'), "IT" => __('ITALY', 'gravityforms'), "JM" => __('JAMAICA', 'gravityforms'), "JP" => __('JAPAN', 'gravityforms'), "JO" => __('JORDAN', 'gravityforms'), "KZ" => __('KAZAKHSTAN', 'gravityforms'), "KE" => __('KENYA', 'gravityforms'), "KI" => __('KIRIBATI', 'gravityforms'), "KP" => __('NORTH KOREA', 'gravityforms'), "KR" => __('SOUTH KOREA', 'gravityforms'), "KV" => __('KOSOVO', 'gravityforms'), "KW" => __('KUWAIT', 'gravityforms'), "KG" => __('KYRGYZSTAN', 'gravityforms'), "LA" => __('LAOS', 'gravityforms'), "LV" => __('LATVIA', 'gravityforms'), "LB" => __('LEBANON', 'gravityforms'), "LS" => __('LESOTHO', 'gravityforms'), "LR" => __('LIBERIA', 'gravityforms'), "LY" => __('LIBYA', 'gravityforms'), "LI" => __('LIECHTENSTEIN', 'gravityforms'), "LT" => __('LITHUANIA', 'gravityforms'), "LU" => __('LUXEMBOURG', 'gravityforms'), "MK" => __('MACEDONIA', 'gravityforms'), "MG" => __('MADAGASCAR', 'gravityforms'), "MW" => __('MALAWI', 'gravityforms'), "MY" => __('MALAYSIA', 'gravityforms'), "MV" => __('MALDIVES', 'gravityforms'), "ML" => __('MALI', 'gravityforms'), "MT" => __('MALTA', 'gravityforms'), "MH" => __('MARSHALL ISLANDS', 'gravityforms'), "MR" => __('MAURITANIA', 'gravityforms'), "MU" => __('MAURITIUS', 'gravityforms'), "MX" => __('MEXICO', 'gravityforms'), "FM" => __('MICRONESIA', 'gravityforms'), "MD" => __('MOLDOVA', 'gravityforms'), "MC" => __('MONACO', 'gravityforms'), "MN" => __('MONGOLIA', 'gravityforms'), "ME" => __('MONTENEGRO', 'gravityforms'), "MA" => __('MOROCCO', 'gravityforms'), "MZ" => __('MOZAMBIQUE', 'gravityforms'), "MM" => __('MYANMAR', 'gravityforms'), "NA" => __('NAMIBIA', 'gravityforms'), "NR" => __('NAURU', 'gravityforms'), "NP" => __('NEPAL', 'gravityforms'), "NL" => __('NETHERLANDS', 'gravityforms'), "NZ" => __('NEW ZEALAND', 'gravityforms'), "NI" => __('NICARAGUA', 'gravityforms'), "NE" => __('NIGER', 'gravityforms'), "NG" => __('NIGERIA', 'gravityforms'), "MP" => __('NORTHERN MARIANA ISLANDS', 'gravityforms'), "NO" => __('NORWAY', 'gravityforms'), "OM" => __('OMAN', 'gravityforms'), "PK" => __('PAKISTAN', 'gravityforms'), "PW" => __('PALAU', 'gravityforms'), "PS" => __('PALESTINE', 'gravityforms'), "PA" => __('PANAMA', 'gravityforms'), "PG" => __('PAPUA NEW GUINEA', 'gravityforms'), "PY" => __('PARAGUAY', 'gravityforms'), "PE" => __('PERU', 'gravityforms'), "PH" => __('PHILIPPINES', 'gravityforms'), "PL" => __('POLAND', 'gravityforms'), "PT" => __('PORTUGAL', 'gravityforms'), "PR" => __('PUERTO RICO', 'gravityforms'), "QA" => __('QATAR', 'gravityforms'), "RO" => __('ROMANIA', 'gravityforms'), "RU" => __('RUSSIA', 'gravityforms'), "RW" => __('RWANDA', 'gravityforms'), "KN" => __('SAINT KITTS AND NEVIS', 'gravityforms'), "LC" => __('SAINT LUCIA', 'gravityforms'), "VC" => __('SAINT VINCENT AND THE GRENADINES', 'gravityforms'), "WS" => __('SAMOA', 'gravityforms'), "SM" => __('SAN MARINO', 'gravityforms'), "ST" => __('SAO TOME AND PRINCIPE', 'gravityforms'), "SA" => __('SAUDI ARABIA', 'gravityforms'), "SN" => __('SENEGAL', 'gravityforms'), "RS" => __('SERBIA AND MONTENEGRO', 'gravityforms'), "SC" => __('SEYCHELLES', 'gravityforms'), "SL" => __('SIERRA LEONE', 'gravityforms'), "SG" => __('SINGAPORE', 'gravityforms'), "SK" => __('SLOVAKIA', 'gravityforms'), "SI" => __('SLOVENIA', 'gravityforms'), "SB" => __('SOLOMON ISLANDS', 'gravityforms'), "SO" => __('SOMALIA', 'gravityforms'), "ZA" => __('SOUTH AFRICA', 'gravityforms'), "ES" => __('SPAIN', 'gravityforms'), "LK" => __('SRI LANKA', 'gravityforms'), "SD" => __('SUDAN', 'gravityforms'), "SS" => __('SUDAN, SOUTH', 'gravityforms'), "SR" => __('SURINAME', 'gravityforms'), "SZ" => __('SWAZILAND', 'gravityforms'), "SE" => __('SWEDEN', 'gravityforms'), "CH" => __('SWITZERLAND', 'gravityforms'), "SY" => __('SYRIA', 'gravityforms'), "TW" => __('TAIWAN', 'gravityforms'), "TJ" => __('TAJIKISTAN', 'gravityforms'), "TZ" => __('TANZANIA', 'gravityforms'), "TH" => __('THAILAND', 'gravityforms'), "TG" => __('TOGO', 'gravityforms'), "TO" => __('TONGA', 'gravityforms'), "TT" => __('TRINIDAD AND TOBAGO', 'gravityforms'), "TN" => __('TUNISIA', 'gravityforms'), "TR" => __('TURKEY', 'gravityforms'), "TM" => __('TURKMENISTAN', 'gravityforms'), "TV" => __('TUVALU', 'gravityforms'), "UG" => __('UGANDA', 'gravityforms'), "UA" => __('UKRAINE', 'gravityforms'), "AE" => __('UNITED ARAB EMIRATES', 'gravityforms'), "GB" => __('UNITED KINGDOM', 'gravityforms'), "US" => __('UNITED STATES', 'gravityforms'), "UY" => __('URUGUAY', 'gravityforms'), "UZ" => __('UZBEKISTAN', 'gravityforms'), "VU" => __('VANUATU', 'gravityforms'), "VC" => __('VATICAN CITY', 'gravityforms'), "VE" => __('VENEZUELA', 'gravityforms'), "VG" => __('VIRGIN ISLANDS, BRITISH', 'gravityforms'), "VI" => __('VIRGIN ISLANDS, U.S.', 'gravityforms'), "VN" => __('VIETNAM', 'gravityforms'), "YE" => __('YEMEN', 'gravityforms'), "ZM" => __('ZAMBIA', 'gravityforms'), "ZW" => __('ZIMBABWE', 'gravityforms'), );
