@@ -1,0 +1,17 @@
+#avala-gform-debug {
+	background-color: #fff;
+	border: 2px solid yellow;
+	display: block;
+	left: 20px;
+	max-height: 80%;
+	max-width: 400px;
+	opacity: .33;
+	overflow: auto;
+	padding: 20px;
+	position: fixed;
+	top: 40px;
+	z-index: 999999;
+}
+#avala-gform-debug:hover {
+	opacity: 1;
+}
