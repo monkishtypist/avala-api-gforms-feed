@@ -126,7 +126,7 @@ if (class_exists("GFForms")) {
                             "name"    => "avalaLeadsourcename",
                             "tooltip" => "Default Lead Source for this form",
                             "choices" => array(
-                                array("label" => get_bloginfo('name')),
+                                //array("label" => get_bloginfo('name')),
                                 array("label" => "--- Default Lead Source(s) ---", "value" => ''),
                                 array("label" => "Affiliate"),
                                 array("label" => "Billboard"),
@@ -169,7 +169,7 @@ if (class_exists("GFForms")) {
                             "name"    => "avalaLeadcategoryname",
                             "tooltip" => "Default Lead Category for this form",
                             "choices" => array(
-                                array("label" => get_bloginfo('name')),
+                                //array("label" => get_bloginfo('name')),
                                 array("label" => "--- Default Lead Category(s) ---", "value" => ''),
                                 array("label" => "Affiliate"),
                                 array("label" => "Buyerzone"),
@@ -190,7 +190,7 @@ if (class_exists("GFForms")) {
                             "name"    => "avalaLeadtypename",
                             "tooltip" => "Default Lead Category for this form",
                             "choices" => array(
-                                array("label" => get_bloginfo('name')),
+                                //array("label" => get_bloginfo('name')),
                                 array("label" => "--- Default Lead Type(s) ---", "value" => ''),
                                 array("label" => "Campaign"),
                                 array("label" => "Contact Dealer"),
@@ -992,7 +992,9 @@ if (class_exists("GFForms")) {
 
         function avala_register_frontend_scripts()
         {
+            wp_register_script( 'avala-js', plugins_url( "/js/avala_api_script.js", __FILE__ ), array('jquery'), '1.0', true );
             wp_register_style( 'avala-style', plugins_url( "/css/avala_api_styles_frontend.css", __FILE__ ), array(), '1.0', 'all' );
+            wp_enqueue_script( 'avala-js');
             wp_enqueue_style( 'avala-style');
         }
     }

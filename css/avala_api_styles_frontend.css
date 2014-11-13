@@ -15,3 +15,73 @@
 #avala-gform-debug:hover {
 	opacity: 1;
 }
+
+
+/**
+ * GFORM ERROR STYLE FIXES
+ *
+ */
+.gform_wrapper li.gfield.gfield_error,
+.gform_wrapper li.gfield.gfield_error.gfield_contains_required,
+.gform_wrapper li.gfield.gfield_error.gfield_contains_required.gfield_creditcard_warning {
+	background-color: initial;
+	border-top: none;
+	border-bottom: none;
+	margin-bottom: initial !important;
+	margin-top: initial;
+	padding-left: initial !important;
+	vertical-align: top;
+}
+.gform_wrapper li.gfield.gfield_error.gfield_contains_required label.gfield_label,
+.gform_wrapper li.gfield.gfield_error.gfield_contains_required div.ginput_container {
+	margin-top: initial;
+}
+.gform_wrapper li.gfield.gfield_error.gfield_contains_required label.gfield_label {
+	margin: 10px 0 4px 0 !important;
+}
+
+.gform_wrapper .top_label .gfield_error .ginput_container {
+	max-width: initial;
+}
+.gform_wrapper .top_label .gfield_error input.large,
+.gform_wrapper .top_label .gfield_error select.large,
+.gform_wrapper .top_label .gfield_error textarea.textarea {
+	background-color: rgb(255,240,240);
+	width: 99.2%;
+}
+.gform_wrapper .top_label .gfield_error input.medium,
+.gform_wrapper .top_label .gfield_error select.medium,
+.gform_wrapper .top_label .gfield_error textarea.medium {
+	background-color: rgb(255,240,240);
+	width: 47%;
+}
+.gform_wrapper .top_label .gfield_error input.small,
+.gform_wrapper .top_label .gfield_error select.small,
+.gform_wrapper .top_label .gfield_error textarea.small {
+	background-color: rgb(255,240,240);
+	width: 25%;
+}
+.gform_wrapper .ginput_container + .gfield_description.validation_message,
+.gform_wrapper .ginput_container .instruction.validation_message {
+	display: none;
+}
+
+
+/* add alert icon to label */
+label.gfield_label.error_after:after {
+	background-color: #f00;
+	border-radius: 100%;
+	color: #fff;
+	content: '!';
+	cursor: pointer;
+	display: inline-block;
+	font-size: 12px;
+	height: 14px;
+	line-height: 1em;
+	margin-left: 4px;
+	padding: 2px;
+	text-align: center;
+	width: 14px;
+}
+
+
