@@ -536,6 +536,10 @@ if (class_exists("GFForms")) {
             // working vars
             $avalaApiFeedSubmit = $feed['meta']['avalaApiFeedSubmit'];
             $url = null;
+			
+			// current user info
+			global $current_user;
+			get_currentuserinfo();
 
             // get submit to location (exit if none)
             if ( $avalaApiFeedSubmit == 1 ) :
@@ -556,9 +560,9 @@ if (class_exists("GFForms")) {
                 'LeadTypeName'                  => $feed['meta']['avalaLeadtypename'],
                 'LeadCategoryName'              => $feed['meta']['avalaLeadcategoryname'],
                 //mapped fields - contact
-                'FirstName'                     => '',
-                'LastName'                      => '',
-                'EmailAddress'                  => '',
+                'FirstName'                     => is_user_logged_in() ? $current_user->user_firstname : '',
+                'LastName'                      => is_user_logged_in() ? $current_user->user_lastname : '',
+                'EmailAddress'                  => is_user_logged_in() ? $current_user->user_emaile : '',
                 'HomePhone'                     => '',
                 'MobilePhone'                   => '',
                 'WorkPhone'                     => '',
