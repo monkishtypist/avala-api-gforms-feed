@@ -698,6 +698,8 @@ if (class_exists("GFForms")) {
         public function get_pages_viewed( $pages = true )
         {
             // Custom cookie reader :: requires "nlk-custom-shortcodes" plugin to generate these tracking cookies
+            if ( ! function_exists( 'is_plugin_active') )
+                include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
             if ( is_plugin_active( 'nlk-custom-shortcodes/nlk-custom-shortcodes.php' ) )
             {
                 if ( !empty( $_COOKIE['__nlkpv'] ) )
