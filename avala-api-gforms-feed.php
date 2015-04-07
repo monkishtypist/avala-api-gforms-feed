@@ -49,6 +49,8 @@ if (class_exists("GFForms")) {
         public $_custom_product_id_list = array();
         public $_default_country = 'US';
 
+        public $_debug;
+
         // constructor to assign plugin setting data to custom vars above
         public function __construct() {
             parent::__construct();
@@ -662,6 +664,7 @@ if (class_exists("GFForms")) {
                 $this->_avala_result['cURL'] = $result;
                 $this->_avala_result['JSON'] = $jsonArray;
                 add_action('wp_footer', array( $this, 'avala_debug') );
+                add_filter("gform_confirmation", "avala_debug_confirm", 10, 4);
             }
             
         }
@@ -684,6 +687,17 @@ if (class_exists("GFForms")) {
             }
             $o .= '</div>';
             print($o);
+        }
+        public function avala_debug_confirm($confirmation, $form, $lead, $ajax)
+        {
+            $arrays = $this->_avala_result;
+            $o = '<div id="avala-gform-debug" ><h3>Avala Debug Details</h3><hr>';
+            foreach ($arrays as $array => $value)
+            {
+                $o .='<h4>'.$array.'</h4><pre>'.print_r($value, true).'</pre><hr>';
+            }
+            $o .= '</div>';
+            return $o;
         }
 
         // Google Analytics cookie parser
