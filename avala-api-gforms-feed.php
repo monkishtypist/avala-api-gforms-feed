@@ -166,6 +166,15 @@ if (class_exists("GFForms")) {
                             ),
                         ),
                         array(
+                            "name" => "avalaMappedFields_leadsourceoverride",
+                            "label" => "Lead Source Override",
+                            "type" => "field_map",
+                            "tooltip" => "Gravity Form field to override default Lead Source",
+                            "field_map" => array(
+                                array("name" => "LeadSourceOverride","label" => "Lead Source","required" => 0),
+                            )
+                        ),
+                        array(
                             "label"   => "Lead Category",
                             "type"    => "select",
                             "name"    => "avalaLeadcategoryname",
@@ -556,6 +565,8 @@ if (class_exists("GFForms")) {
             if ( isset($_COOKIE['__utmz']) && !empty($_COOKIE['__utmz']) )
                 $ga_cookie = $this->parse_ga_cookie( $_COOKIE['__utmz'] );
 
+            // Check for Lead Source override
+            $feed['meta']['avalaMappedFields_leadsourceoverride'];
             // The full array of data that will be translated into Avala API data
             $jsonArray = array(
                 'LeadSourceName'                => $feed['meta']['avalaLeadsourcename'],
@@ -564,7 +575,7 @@ if (class_exists("GFForms")) {
                 //mapped fields - contact
                 'FirstName'                     => is_user_logged_in() ? $current_user->user_firstname : '',
                 'LastName'                      => is_user_logged_in() ? $current_user->user_lastname : '',
-                'EmailAddress'                  => is_user_logged_in() ? $current_user->user_emaile : '',
+                'EmailAddress'                  => is_user_logged_in() ? $current_user->user_email : '',
                 'HomePhone'                     => '',
                 'MobilePhone'                   => '',
                 'WorkPhone'                     => '',
