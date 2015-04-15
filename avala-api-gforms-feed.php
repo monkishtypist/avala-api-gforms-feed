@@ -674,6 +674,8 @@ if (class_exists("GFForms")) {
             {
                 $this->_avala_result['cURL'] = $result;
                 $this->_avala_result['JSON'] = $jsonArray;
+                $this->_avala_result['Feed'] = $feed;
+                $this->_avala_result['Entry'] = $entry;
                 add_action('wp_footer', array( $this, 'avala_debug') );
                 add_filter("gform_confirmation", "avala_debug_confirm", 10, 4);
             }
