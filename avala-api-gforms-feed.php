@@ -359,6 +359,7 @@ if (class_exists("GFForms")) {
                 'avalaLeadsourcename' => __('Lead Source', 'avala-api-gforms-feed'),
                 'avalaLeadcategoryname' => __('Lead Category', 'avala-api-gforms-feed'),
                 'avalaLeadtypename' => __('Lead Type', 'avala-api-gforms-feed'),
+                'avalaCondition' => __('Condition', 'avala-api-gforms-feed'),
             );
         }
 
