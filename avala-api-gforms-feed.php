@@ -362,6 +362,10 @@ if (class_exists("GFForms")) {
                 'avalaCondition' => __('Condition', 'avala-api-gforms-feed'),
             );
         }
+        // customize the value of mytext before it is rendered to the list
+        public function get_column_value_avalaCondition( $feed ){
+            return '<b>' . $feed['meta']['mytext'] . '</b>';
+        }
 
         /**
          *  Change numeric field to textual output on overview page for human readability
@@ -664,6 +668,8 @@ if (class_exists("GFForms")) {
             {
                 $this->_avala_result['cURL'] = $result;
                 $this->_avala_result['JSON'] = $jsonArray;
+                $this->_avala_result['FEED'] = $feed;
+                $this->_avala_result['ENTRY'] = $entry;
                 add_action('wp_footer', array( $this, 'avala_debug') );
                 add_filter("gform_confirmation", "avala_debug_confirm", 10, 4);
             }
