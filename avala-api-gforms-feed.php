@@ -364,7 +364,15 @@ if (class_exists("GFForms")) {
         }
         // customize the value of mytext before it is rendered to the list
         public function get_column_value_avalaCondition( $feed ){
-            return '<b>' . $feed['meta']['mytext'] . '</b>';
+            $output = 'N/A';
+            $rules = array();
+            if ( $feed['meta']['feed_condition_conditional_logic'] == 1 ) {
+                foreach ( $feed['meta']['feed_condition_conditional_logic_object']['conditionalLogic']['rules'] as $key => $value ) {
+                    $rules[] = $value['value'];
+                }
+                $output = implode(', ', $rules);
+            }
+            return $output;
         }
 
         /**
