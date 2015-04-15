@@ -166,15 +166,6 @@ if (class_exists("GFForms")) {
                             ),
                         ),
                         array(
-                            "name" => "avalaMappedFields_leadsourceoverride",
-                            "label" => "Lead Source Override",
-                            "type" => "field_map",
-                            "tooltip" => "Gravity Form field to override default Lead Source",
-                            "field_map" => array(
-                                array("name" => "LeadSourceOverride","label" => "Lead Source","required" => 0),
-                            )
-                        ),
-                        array(
                             "label"   => "Lead Category",
                             "type"    => "select",
                             "name"    => "avalaLeadcategoryname",
@@ -565,8 +556,6 @@ if (class_exists("GFForms")) {
             if ( isset($_COOKIE['__utmz']) && !empty($_COOKIE['__utmz']) )
                 $ga_cookie = $this->parse_ga_cookie( $_COOKIE['__utmz'] );
 
-            // Check for Lead Source override
-            $feed['meta']['avalaMappedFields_leadsourceoverride'];
             // The full array of data that will be translated into Avala API data
             $jsonArray = array(
                 'LeadSourceName'                => $feed['meta']['avalaLeadsourcename'],
@@ -674,8 +663,6 @@ if (class_exists("GFForms")) {
             {
                 $this->_avala_result['cURL'] = $result;
                 $this->_avala_result['JSON'] = $jsonArray;
-                $this->_avala_result['Feed'] = $feed;
-                $this->_avala_result['Entry'] = $entry;
                 add_action('wp_footer', array( $this, 'avala_debug') );
                 add_filter("gform_confirmation", "avala_debug_confirm", 10, 4);
             }
