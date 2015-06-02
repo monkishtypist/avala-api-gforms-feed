@@ -62,7 +62,7 @@ if (class_exists("GFForms")) {
         public function plugin_page() {
             ?>
             <p>Avala API Settings are handled within Gravity Forms settings page at:<br />
-                <b>Forms</b> -> <b>Settings</b> -> <b>Avala API</b>
+                <b>Forms</b> -> <b>Settings</b> -> <b><a href="<?php echo get_bloginfo(); ?>/wp-admin/admin.php?page=gf_settings&subview=avala-api-gforms-feed">Avala API</a>a></b>
             </p>
             <h2>How to use this plugin</h2>
             <h3>A step-by-step guide</h3>
@@ -81,7 +81,8 @@ if (class_exists("GFForms")) {
                     From the form edit/view page, go to "My Form -> Form Settings -> Avala API Feeds"</li>
                 <li>Click "Add New" to create a new feed</li>
                 <li>Update your feed settings per your requirements</li>
-                <li>Map necessary form fields to your Avala fields to be submitted - some fields are required</li>
+                <li>Map necessary form fields to your Avala fields to be submitted - some fields are required<br />
+                    Hidden fields can be used to pass data not entered by the customer (ie: Brand)</li>
                 <li>Set up a feed submit condition as necessary</li>
                 <li>Save your changes! You are all set</li>
             </ol>
@@ -368,7 +369,7 @@ if (class_exists("GFForms")) {
             $rules = array();
             if ( $feed['meta']['feed_condition_conditional_logic'] == 1 ) {
                 foreach ( $feed['meta']['feed_condition_conditional_logic_object']['conditionalLogic']['rules'] as $key => $value ) {
-                    $rules[] = $value['value'];
+                    $rules[] = 'field_' . $value['fieldId'] . ' ' . $value['operator'] . ' ' . $value['value'];
                 }
                 $output = implode(', ', $rules);
             }
