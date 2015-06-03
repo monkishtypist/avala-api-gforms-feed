@@ -360,7 +360,7 @@ if (class_exists("GFForms")) {
                 'avalaLeadsourcename' => __('Lead Source', 'avala-api-gforms-feed'),
                 'avalaLeadcategoryname' => __('Lead Category', 'avala-api-gforms-feed'),
                 'avalaLeadtypename' => __('Lead Type', 'avala-api-gforms-feed'),
-                'avalaCondition' => __('Condition', 'avala-api-gforms-feed'),
+                'avalaCondition' => __('Condition(s)', 'avala-api-gforms-feed'),
             );
         }
         // customize the value of mytext before it is rendered to the list
@@ -369,9 +369,10 @@ if (class_exists("GFForms")) {
             $rules = array();
             if ( $feed['meta']['feed_condition_conditional_logic'] == 1 ) {
                 foreach ( $feed['meta']['feed_condition_conditional_logic_object']['conditionalLogic']['rules'] as $key => $value ) {
-                    $rules[] = 'field_' . $value['fieldId'] . ' ' . $value['operator'] . ' ' . $value['value'];
+                    $rules[] = sprintf( 'field_$1%d $2%s $3%s' , $value['fieldId'], ( $value['operator'] === 'is' ? 'is' : 'is not' ), $value['value'] );
                 }
-                $output = implode(', ', $rules);
+                $andor = $feed['meta']['feed_condition_conditional_logic_object']['conditionalLogic']['logicType'] === 'any' ? 'or' : 'and';
+                $output = implode(', ' . $andor . ' ', $rules);
             }
             return $output;
         }
@@ -696,24 +697,27 @@ if (class_exists("GFForms")) {
         public function avala_debug()
         {
             $arrays = $this->_avala_result;
-            $o = '<div id="avala-gform-debug" ><h3>Avala Debug Details</h3><hr>';
+            $o = '<div id="avala-gform-debug" class=""><h3>Avala Debug Details</h3><hr>';
             foreach ($arrays as $array => $value)
             {
                 $o .='<h4>'.$array.'</h4><pre>'.print_r($value, true).'</pre><hr>';
             }
             $o .= '</div>';
-            print($o);
+            if ( current_user_can( 'activate_plugins' ) )
+                print($o);
         }
         public function avala_debug_confirm($confirmation, $form, $lead, $ajax)
         {
             $arrays = $this->_avala_result;
-            $o = '<div id="avala-gform-debug" ><h3>Avala Debug Details</h3><hr>';
+            $o = '<div id="avala-gform-debug" class="avala_confirm"><h3>Avala Debug Details</h3><hr>';
             foreach ($arrays as $array => $value)
             {
                 $o .='<h4>'.$array.'</h4><pre>'.print_r($value, true).'</pre><hr>';
             }
             $o .= '</div>';
-            return $o;
+            if ( current_user_can( 'activate_plugins' ) )
+                return $o;
+            return false;
         }
 
         // Google Analytics cookie parser
