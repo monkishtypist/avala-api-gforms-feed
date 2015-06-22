@@ -353,7 +353,7 @@ if (class_exists("GFForms")) {
          *  Columns displayed on Feed overview / list page
          *
          **/
-        protected function feed_list_columns() {
+        public function feed_list_columns() {
             return array(
                 'avalaFeedName' => __('Name', 'avala-api-gforms-feed'),
                 'avalaApiFeedSubmit' => __('Submit To', 'avala-api-gforms-feed'),
