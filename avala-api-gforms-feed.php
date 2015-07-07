@@ -369,7 +369,7 @@ if (class_exists("GFForms")) {
             $rules = array();
             if ( $feed['meta']['feed_condition_conditional_logic'] == 1 ) {
                 foreach ( $feed['meta']['feed_condition_conditional_logic_object']['conditionalLogic']['rules'] as $key => $value ) {
-                    $rules[] = sprintf( 'field_$1%d $2%s $3%s' , $value['fieldId'], ( $value['operator'] === 'is' ? 'is' : 'is not' ), $value['value'] );
+                    $rules[] = sprintf( 'field_%d %s %s' , $value['fieldId'], ( $value['operator'] === 'is' ? 'is' : 'is not' ), $value['value'] );
                 }
                 $andor = $feed['meta']['feed_condition_conditional_logic_object']['conditionalLogic']['logicType'] === 'any' ? 'or' : 'and';
                 $output = implode(', ' . $andor . ' ', $rules);
