@@ -274,7 +274,7 @@ if (class_exists("GFForms")) {
                                 array("name" => "ExactTargetCustomAttributes","label" => "Exact Target Custom Attributes","required" => 0),
                                 array("name" => "LeadDate","label" => "Lead Date","required" => 0),
                                 array("name" => "ProductCode","label" => "Product Code","required" => 0),
-                                array("name" => "ProductIdList","label" => "Product Id List","required" => 0),
+                                array("name" => "ProductIdList","label" => "Which Product Are You Interested In? (Product Id List)","required" => 0),
                                 array("name" => "TriggeredSend","label" => "Triggered Send","required" => 0),
                             ),
                         ),
@@ -284,13 +284,13 @@ if (class_exists("GFForms")) {
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
                             "field_map" => array(
-                                array("name" => "BuyTimeFrame","label" => "Buy Time Frame","required" => 0),
-                                array("name" => "Condition","label" => "Condition","required" => 0),
-                                array("name" => "CurrentlyOwn","label" => "Currently Own","required" => 0),
+                                array("name" => "BuyTimeFrame","label" => "When do you plan to purchase a hot tub?<br /><small>Buy Time Frame</small>","required" => 0),
+                                array("name" => "Condition","label" => "Condition of Hot Tub","required" => 0),
+                                array("name" => "CurrentlyOwn","label" => "Do You Currently Own","required" => 0),
                                 array("name" => "HomeOwner","label" => "Home Owner","required" => 0),
-                                array("name" => "InterestedInOwning","label" => "Interested In Owning","required" => 0),
+                                array("name" => "InterestedInOwning","label" => "Are You Interested In Owning (yes / no)","required" => 0),
                                 array("name" => "PayoffLeft","label" => "Payoff Left","required" => 0),
-                                array("name" => "ProductUse","label" => "Product Use","required" => 0),
+                                array("name" => "ProductUse","label" => "Product Use (primary reason or benefit...)","required" => 0),
                                 array("name" => "TradeInMake","label" => "Trade In Make","required" => 0),
                                 array("name" => "TradeInYear","label" => "Trade In Year","required" => 0),
                             )
@@ -305,12 +305,12 @@ if (class_exists("GFForms")) {
                             "label"   => "Medium / Source",
                             "type"    => "text",
                             "name"    => "avalaMediumSource",
-                            //"tooltip" => "This is the tooltip",
+                            "tooltip" => "For example \"Adwords\". Use conditional settings below to process feed accordingly.",
                             "class"   => "small"
                         ),
                         array(
                             "name" => "avalaMappedFields_WebSession",
-                            "label" => "Map Web Session Fields",
+                            "label" => "Mapped Fields",
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
                             "field_map" => array(
@@ -325,13 +325,13 @@ if (class_exists("GFForms")) {
                     )
                 ),
                 array(
-                    "title"  => "Web Session Data",
+                    "title"  => "Feed Settings",
                     "fields" => array(
                         array(
                             "name" => "avalaCondition",
                             "label" => __("Conditional", "avala-api-gforms-feed"),
                             "type" => "feed_condition",
-                            "checkbox_label" => __('Enable Condition', 'avala-api-gforms-feed'),
+                            "checkbox_label" => __('Enable Feed Condition', 'avala-api-gforms-feed'),
                             "instructions" => __("Process this Avala feed if", "avala-api-gforms-feed")
                         ),
                     )
