@@ -252,9 +252,9 @@ if (class_exists("GFForms")) {
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
                             "field_map" => array(
-                                array("name" => "RecieveEmailCampaigns","label" => "Recieve Email Campaigns","required" => 0),
-                                array("name" => "ReceiveNewsletter","label" => "Receive Newsletter","required" => 0),
-                                array("name" => "ReceiveSmsCampaigns","label" => "Receive SMS Campaigns","required" => 0),
+                                array("name" => "RecieveEmailCampaigns","label" => "Please send me exclusive sale alerts...<br /><code>Recieve Email Campaigns</code>","required" => 0),
+                                array("name" => "ReceiveNewsletter","label" => "<code>Receive Newsletter</code>","required" => 0),
+                                array("name" => "ReceiveSmsCampaigns","label" => "<code>Receive SMS Campaigns</code>","required" => 0),
                             )
                         ),
                         array(
@@ -274,7 +274,7 @@ if (class_exists("GFForms")) {
                                 array("name" => "ExactTargetCustomAttributes","label" => "Exact Target Custom Attributes","required" => 0),
                                 array("name" => "LeadDate","label" => "Lead Date","required" => 0),
                                 array("name" => "ProductCode","label" => "Product Code","required" => 0),
-                                array("name" => "ProductIdList","label" => "Which Product Are You Interested In? (Product Id List)","required" => 0),
+                                array("name" => "ProductIdList","label" => "Which Product Are You Interested In?<br /><code>Product Id List</code>","required" => 0),
                                 array("name" => "TriggeredSend","label" => "Triggered Send","required" => 0),
                             ),
                         ),
@@ -284,15 +284,15 @@ if (class_exists("GFForms")) {
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
                             "field_map" => array(
-                                array("name" => "BuyTimeFrame","label" => "When do you plan to purchase a hot tub?<br /><small>Buy Time Frame</small>","required" => 0),
-                                array("name" => "Condition","label" => "Condition of Hot Tub","required" => 0),
-                                array("name" => "CurrentlyOwn","label" => "Do You Currently Own","required" => 0),
-                                array("name" => "HomeOwner","label" => "Home Owner","required" => 0),
-                                array("name" => "InterestedInOwning","label" => "Are You Interested In Owning (yes / no)","required" => 0),
-                                array("name" => "PayoffLeft","label" => "Payoff Left","required" => 0),
-                                array("name" => "ProductUse","label" => "Product Use (primary reason or benefit...)","required" => 0),
+                                array("name" => "CurrentlyOwn","label" => "Do you currently own or have you ever owned a hot tub?<br /><code>Currently Own</code>","required" => 0),
+                                array("name" => "InterestedInOwning","label" => "Are you interested in owning a hot tub?<br /><code>yes / no</code><br /><small>For <i>Product Interest</i> see additional fields above</small>","required" => 0),
+                                array("name" => "BuyTimeFrame","label" => "When do you plan to purchase?<br /><code>Buy Time Frame</code>","required" => 0),
+                                array("name" => "HomeOwner","label" => "Are you a home owner?","required" => 0),
+                                array("name" => "ProductUse","label" => "What is the primary reason or benefit for owning a hot tub?<br /><code>Product Use</code>","required" => 0),
                                 array("name" => "TradeInMake","label" => "Trade In Make","required" => 0),
                                 array("name" => "TradeInYear","label" => "Trade In Year","required" => 0),
+                                array("name" => "Condition","label" => "Trade In Condition","required" => 0),
+                                array("name" => "PayoffLeft","label" => "Payoff Left","required" => 0),
                             )
                         ),
                         
