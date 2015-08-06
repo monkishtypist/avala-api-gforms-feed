@@ -295,6 +295,19 @@ if (class_exists("GFForms")) {
                                 array("name" => "TradeInYear","label" => "Trade In Year","required" => 0),
                             )
                         ),
+                        
+                    )
+                ),
+                array(
+                    "title"  => "Web Session Data",
+                    "fields" => array(
+                        array(
+                            "label"   => "Medium / Source",
+                            "type"    => "text",
+                            "name"    => "avalaMediumSource",
+                            //"tooltip" => "This is the tooltip",
+                            "class"   => "small"
+                        ),
                         array(
                             "name" => "avalaMappedFields_WebSession",
                             "label" => "Map Web Session Fields",
@@ -302,13 +315,18 @@ if (class_exists("GFForms")) {
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
                             "field_map" => array(
                                 array("name" => "DeliveryMethod","label" => "Delivery Method","required" => 0),
-                                array("name" => "Medium","label" => "Medium / Source","required" => 0),
+                                //array("name" => "Medium","label" => "Medium / Source","required" => 0),
                                 //array("name" => "KeyWords","label" => "Key Words","required" => 0),
                                 //array("name" => "PagesViewed","label" => "Pages Viewed","required" => 0),
                                 //array("name" => "PageViews","label" => "Page Views","required" => 0),
                                 //array("name" => "TimeOnSite","label" => "Time On Site","required" => 0),
                             )
-                        ),
+                        )
+                    )
+                ),
+                array(
+                    "title"  => "Web Session Data",
+                    "fields" => array(
                         array(
                             "name" => "avalaCondition",
                             "label" => __("Conditional", "avala-api-gforms-feed"),
@@ -630,7 +648,7 @@ if (class_exists("GFForms")) {
                     'FormPage'                  => $entry['source_url'],
                     'IPaddress'                 => $entry['ip'],
                     'KeyWords'                  => ( isset($ga_cookie['keyword']) && !empty($ga_cookie['keyword']) ) ? $ga_cookie['keyword'] : '',
-                    'Medium'                    => ( isset($ga_cookie['medium']) && !empty($ga_cookie['medium']) ) ? $ga_cookie['medium'] : '',
+                    'Medium'                    => ( isset($feed['meta']['avalaMediumSource']) ? $feed['meta']['avalaMediumSource'] : ( ( isset($ga_cookie['medium']) && !empty($ga_cookie['medium']) ) ? $ga_cookie['medium'] : '' ) ),
                     'PagesViewed'               => $this->get_pages_viewed(),
                     'PageViews'                 => $this->get_page_views(),
                     'TimeOnSite'                => $this->get_time_on_site(),
