@@ -302,6 +302,7 @@ if (class_exists("GFForms")) {
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
                             "field_map" => array(
                                 array("name" => "DeliveryMethod","label" => "Delivery Method","required" => 0),
+                                array("name" => "Medium","label" => "Medium / Source","required" => 0),
                                 //array("name" => "KeyWords","label" => "Key Words","required" => 0),
                                 //array("name" => "PagesViewed","label" => "Pages Viewed","required" => 0),
                                 //array("name" => "PageViews","label" => "Page Views","required" => 0),
