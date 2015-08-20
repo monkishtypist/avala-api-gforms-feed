@@ -284,6 +284,7 @@ if (class_exists("GFForms")) {
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
                             "field_map" => array(
+                                array("name" => "PromoCode","label" => "<code>Promo Code</code>","required" => 0),
                                 array("name" => "CurrentlyOwn","label" => "<code>Currently Own</code><br /><small>Do you currently own or have you ever owned a hot tub?</small>","required" => 0),
                                 array("name" => "InterestedInOwning","label" => "<code>Interested In Owning</code><br /><small>Are you interested in owning a hot tub? (yes / no)</small><br /><small>For <i>Product Interest In</i> see additional fields above</small>","required" => 0),
                                 array("name" => "BuyTimeFrame","label" => "<code>Buy Time Frame</code><br /><small>When do you plan to purchase?</small>","required" => 0),
@@ -641,6 +642,7 @@ if (class_exists("GFForms")) {
                     'ProductUse'                => '',
                     'TradeInMake'               => '',
                     'TradeInYear'               => '',
+                    'PromoCode'                 => '',
                     ),
                 //mapped fields - websession data
                 'WebSessionData'                => array(
