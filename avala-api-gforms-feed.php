@@ -269,7 +269,6 @@ if (class_exists("GFForms")) {
                                 array("name" => "CampaignId","label" => "Campaign Id","required" => 0),
                                 array("name" => "DealerId","label" => "Dealer Id","required" => 0),
                                 array("name" => "DealerNumber","label" => "Dealer Number","required" => 0),
-                                array("name" => "Event","label" => "Event","required" => 0),
                                 array("name" => "ExactTargetOptInListIds","label" => "Exact Target Opt-In List Ids","required" => 0),
                                 array("name" => "ExactTargetCustomAttributes","label" => "Exact Target Custom Attributes","required" => 0),
                                 array("name" => "LeadDate","label" => "Lead Date","required" => 0),
@@ -285,6 +284,7 @@ if (class_exists("GFForms")) {
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
                             "field_map" => array(
                                 array("name" => "PromoCode","label" => "<code>Promo Code</code>","required" => 0),
+                                array("name" => "Event","label" => "<code>Event</code>","required" => 0),
                                 array("name" => "CurrentlyOwn","label" => "<code>Currently Own</code><br /><small>Do you currently own or have you ever owned a hot tub?</small>","required" => 0),
                                 array("name" => "InterestedInOwning","label" => "<code>Interested In Owning</code><br /><small>Are you interested in owning a hot tub? (yes / no)</small><br /><small>For <i>Product Interest In</i> see additional fields above</small>","required" => 0),
                                 array("name" => "BuyTimeFrame","label" => "<code>Buy Time Frame</code><br /><small>When do you plan to purchase?</small>","required" => 0),
@@ -624,7 +624,6 @@ if (class_exists("GFForms")) {
                 'CampaignId'                    => '',
                 'DealerId'                      => '',
                 'DealerNumber'                  => '',
-                'Event'                         => '',
                 'ExactTargetOptInListIds'       => ( $this->get_plugin_setting('avala_defaultOptInListId') ) ? $this->get_plugin_setting('avala_defaultOptInListId') : '',
                 'ExactTargetCustomAttributes'   => '',
                 'LeadDate'                      => '',
@@ -643,6 +642,7 @@ if (class_exists("GFForms")) {
                     'TradeInMake'               => '',
                     'TradeInYear'               => '',
                     'PromoCode'                 => '',
+                    'Event'                     => '',
                     ),
                 //mapped fields - websession data
                 'WebSessionData'                => array(
