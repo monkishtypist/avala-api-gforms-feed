@@ -46,32 +46,36 @@ if (class_exists("GFForms")) {
         public function plugin_page() {
             ?>
             <p>Avala API Settings are handled within Gravity Forms settings page at:<br />
-                <b>Forms</b> -> <b>Settings</b> -> <b><a href="<?php echo get_bloginfo(); ?>/wp-admin/admin.php?page=gf_settings&subview=avala-api-gforms-feed">Avala API</a>a></b>
+                <b>Forms</b> > <b>Settings</b> > <b><a href="<?php echo get_bloginfo(); ?>/wp-admin/admin.php?page=gf_settings&subview=avala-api-gforms-feed">Avala API</a></b>
             </p>
             <h2>How to use this plugin</h2>
-            <h3>A step-by-step guide</h3>
             <ol>
-                <li>Update Plugin Settings by going to "Forms -> Settings -> Avala API"<br>
-                    You will need the following:
+                <li>Go to the <a href="<?php echo get_bloginfo(); ?>/wp-admin/admin.php?page=gf_settings&subview=avala-api-gforms-feed">Avala Settings</a> page</li>
+                <li>Update each of the following fields:
                     <ul style="margin-left: 20px;">
-                        <li>Aimbase submit URL(s) - live and/or QA</li>
-                        <li>Any custom lead categories, sources, and types not included in this plugin defaults</li>
-                        <li>Your product ID list - this can be exported directly from Aimbase</li>
-                        <li>Any opt-in list ID(s)</li>
+                        <li>Aimbase submit URL(s), Live and QA</li>
+                        <li>Lead categories</li>
+                        <li>Lead sources</li>
+                        <li>Lead types</li>
+                        <li>Custom Fields - these would include any additional information/fields mapped to the API</li>
                     </ul>
                 </li>
                 <li>Create your forms</li>
-                <li>Add custom Feeds to your form<br />
-                    From the form edit/view page, go to "My Form -> Form Settings -> Avala API Feeds"</li>
-                <li>Click "Add New" to create a new feed</li>
-                <li>Update your feed settings per your requirements</li>
-                <li>Map necessary form fields to your Avala fields to be submitted - some fields are required<br />
-                    Hidden fields can be used to pass data not entered by the customer (ie: Brand)</li>
-                <li>Set up a feed submit condition as necessary</li>
-                <li>Save your changes! You are all set</li>
+                <li>Add custom Feeds to your form
+                    <ul style="margin-left: 20px;">
+                        <li>From the form edit/view page, go to "My Form -> Form Settings -> Avala API Feeds"</li>
+                        <li>Click "Add New" to create a new feed</li>
+                        <li>Update your feed settings per your requirements</li>
+                        <li>Map necessary form fields to your Avala fields to be submitted, it is up to you to know which fields are required in your API</li>
+                        <li>Hidden fields can be used to pass data not entered by the customer</li>
+                        <li>Set up a feed submit condition as necessary</li>
+                        <li>Save your changes! You are all set</li>
+                    </ul>
+                </li>
             </ol>
             <h3>Why do I need conditions for my feeds?</h3>
             <p>A new feed must be created for every variation of form submit. Conditionals allow you to pick and choose which feed will be used at which time, for example if you are changing lead source based on entry.</p>
+            <p><a href="<?php echo get_bloginfo(); ?>/wp-admin/admin.php?page=gf_settings&subview=avala-api-gforms-feed">Click Here to get started</a></p>
             <?php
             //wp_redirect( 'admin.php?page=gf_settings&subview=Avala+API+Feed' );
         }
@@ -111,105 +115,38 @@ if (class_exists("GFForms")) {
                             "label"   => "Lead Source",
                             "type"    => "select",
                             "name"    => "avalaLeadsourcename",
-                            "tooltip" => "Default Lead Source for this form",
+                            "tooltip" => "Default Lead Source for this form. Lead Sources must first be defined in Plugin Settings.",
                             "choices" => array(
-                                //array("label" => get_bloginfo('name')),
-                                array("label" => "--- Default Lead Source(s) ---", "value" => ''),
-                                array("label" => "Affiliate"),
-                                array("label" => "Billboard"),
-                                array("label" => "BRC Card"),
-                                array("label" => "Buyerzone-Abandoned"),
-                                array("label" => "BuyerZone-Qualified"),
-                                array("label" => "Call Center"),
-                                array("label" => "Co-Brand Out of Market"),
-                                array("label" => "Consumer iPad"),
-                                array("label" => "Dealer Import"),
-                                array("label" => "Direct Mail"),
-                                array("label" => "Historical"),
-                                array("label" => "Kiosk"),
-                                array("label" => "Media-AdRoll"),
-                                array("label" => "Media-FutureAds"),
-                                array("label" => "Media-PointRoll"),
-                                array("label" => "Media-Rocket_Fuel"),
-                                array("label" => "Media-Turn"),
-                                array("label" => "Media-Videology"),
-                                array("label" => "Microsite"),
-                                array("label" => "Newsletter"),
-                                array("label" => "Other"),
-                                array("label" => "Page Retargeting"),
-                                array("label" => "PicMktg"),
-                                array("label" => "Print Ad"),
-                                array("label" => "Promo"),
-                                array("label" => "Radio"),
-                                array("label" => "Referral and Rewards"),
-                                array("label" => "Rock-n-Roll"),
-                                array("label" => "Search - Organic"),
-                                array("label" => "Search - Paid"),
-                                array("label" => "Sponsored Email"),
-                                array("label" => "Television"),
-                                array("label" => "Third Party"),
+                                array("label" => get_bloginfo('name'))
                             ),
                         ),
                         array(
                             "label"   => "Lead Category",
                             "type"    => "select",
                             "name"    => "avalaLeadcategoryname",
-                            "tooltip" => "Default Lead Category for this form",
+                            "tooltip" => "Default Lead Category for this form. Lead Categories must first be defined in Plugin Settings.",
                             "choices" => array(
-                                //array("label" => get_bloginfo('name')),
-                                array("label" => "--- Default Lead Category(s) ---", "value" => ''),
-                                array("label" => "Affiliate"),
-                                array("label" => "Buyerzone"),
-                                array("label" => "Co-Brand"),
-                                array("label" => "Dealer Entry"),
-                                array("label" => "Display Advertising"),
-                                array("label" => "Email"),
-                                array("label" => "Event"),
-                                array("label" => "Other"),
-                                array("label" => "Print Ad"),
-                                array("label" => "Referral Program"),
-                                array("label" => "Third Party"),
+                                array("label" => get_bloginfo('name'))
                             ),
                         ),
                         array(
                             "label"   => "Lead Type",
                             "type"    => "select",
                             "name"    => "avalaLeadtypename",
-                            "tooltip" => "Default Lead Category for this form",
+                            "tooltip" => "Default Lead Type for this form. Lead Types must first be defined in Plugin Settings.",
                             "choices" => array(
-                                //array("label" => get_bloginfo('name')),
-                                array("label" => "--- Default Lead Type(s) ---", "value" => ''),
-                                array("label" => "Campaign"),
-                                array("label" => "Contact Dealer"),
-                                array("label" => "Dealer Entry"),
-                                array("label" => "Request Appointment"),
-                                array("label" => "Request Brochure Download"),
-                                array("label" => "Request Brochure Download & DVD"),
-                                array("label" => "Request Brochure Mail"),
-                                array("label" => "Request Brochure Mail & Download"),
-                                array("label" => "Request Brochure Mail & Download & DVD"),
-                                array("label" => "Request Brochure Mail & DVD"),
-                                array("label" => "Request Buyer's Guide"),
-                                array("label" => "Request DVD"),
-                                array("label" => "Request Financing"),
-                                array("label" => "Request Quote"),
-                                array("label" => "Request Test Drive"),
-                                array("label" => "Request Trade In"),
-                                array("label" => "Subscriber"),
-                                array("label" => "Sweepstakes"),
-                                array("label" => "Truck Load"),
-                                array("label" => "Other"),
+                                array("label" => get_bloginfo('name'))
                             ),
                         ),
                         array(
                             "name" => "avalaMappedFields_Contact",
                             "label" => "Map Contact Fields",
                             "type" => "field_map",
-                            "tooltip" => "Map each Avala Field to Gravity Form Field",
+                            "tooltip" => "Map each Avala Field to Gravity Form Field.",
                             "field_map" => array(
-                                array("name" => "FirstName","label" => "First Name","required" => 1),
-                                array("name" => "LastName","label" => "Last Name","required" => 1),
-                                array("name" => "EmailAddress","label" => "Email Address","required" => 1),
+                                array("name" => "FirstName","label" => "First Name","required" => 0),
+                                array("name" => "LastName","label" => "Last Name","required" => 0),
+                                array("name" => "EmailAddress","label" => "Email Address","required" => 0),
                                 array("name" => "HomePhone","label" => "Phone (Home)","required" => 0),
                                 array("name" => "MobilePhone","label" => "Phone (Mobile)","required" => 0),
                                 array("name" => "WorkPhone","label" => "Phone (Work)","required" => 0),
@@ -227,60 +164,16 @@ if (class_exists("GFForms")) {
                                 array("name" => "City","label" => "City","required" => 0),
                                 array("name" => "State","label" => "State","required" => 0),
                                 array("name" => "CountryCode","label" => "Country","required" => 0),
-                                array("name" => "PostalCode","label" => "Zip / Postal Code","required" => 1),
+                                array("name" => "PostalCode","label" => "Zip / Postal Code","required" => 0),
                             )
                         ),
                         array(
-                            "name" => "avalaMappedFields_Subscription",
-                            "label" => "Map Subscription Fields",
+                            "name" => "avalaMappedFields_Custom",
+                            "label" => "Map Custom Fields",
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
-                            "field_map" => array(
-                                array("name" => "RecieveEmailCampaigns","label" => "<code>Recieve Email Campaigns</code><br /><small>Please send me exclusive sale alerts...</small>","required" => 0),
-                                array("name" => "ReceiveNewsletter","label" => "<code>Receive Newsletter</code>","required" => 0),
-                                array("name" => "ReceiveSmsCampaigns","label" => "<code>Receive SMS Campaigns</code>","required" => 0),
-                            )
-                        ),
-                        array(
-                            "name" => "avalaMappedFields_AddlData",
-                            "label" => "Map Additional Fields",
-                            "type" => "field_map",
-                            "tooltip" => "Map each Avala Field to Gravity Form Field",
-                            "field_map" => array(
-                                array("name" => "AccountId","label" => "Account Id","required" => 0),
-                                array("name" => "Brand","label" => "Brand","required" => 0),
-                                array("name" => "Campaign","label" => "Campaign","required" => 0),
-                                array("name" => "CampaignId","label" => "Campaign Id","required" => 0),
-                                array("name" => "DealerId","label" => "Dealer Id","required" => 0),
-                                array("name" => "DealerNumber","label" => "Dealer Number","required" => 0),
-                                array("name" => "ExactTargetOptInListIds","label" => "Exact Target Opt-In List Ids","required" => 0),
-                                array("name" => "ExactTargetCustomAttributes","label" => "Exact Target Custom Attributes","required" => 0),
-                                array("name" => "LeadDate","label" => "Lead Date","required" => 0),
-                                array("name" => "ProductCode","label" => "Product Code","required" => 0),
-                                array("name" => "TriggeredSend","label" => "Triggered Send","required" => 0),
-                                array("name" => "ProductIdList","label" => "<code>Product Id List</code><br /><small>Which product are you interested in purchasing most?</small>","required" => 0),
-                            ),
-                        ),
-                        array(
-                            "name" => "avalaMappedFields_CustomData",
-                            "label" => "Map Custom Data Fields",
-                            "type" => "field_map",
-                            "tooltip" => "Map each Avala Field to Gravity Form Field",
-                            "field_map" => array(
-                                array("name" => "PromoCode","label" => "<code>Promo Code</code>","required" => 0),
-                                array("name" => "Event","label" => "<code>Event</code>","required" => 0),
-                                array("name" => "CurrentlyOwn","label" => "<code>Currently Own</code><br /><small>Do you currently own or have you ever owned a hot tub?</small>","required" => 0),
-                                array("name" => "InterestedInOwning","label" => "<code>Interested In Owning</code><br /><small>Are you interested in owning a hot tub? (yes / no)</small><br /><small>For <i>Product Interest In</i> see additional fields above</small>","required" => 0),
-                                array("name" => "BuyTimeFrame","label" => "<code>Buy Time Frame</code><br /><small>When do you plan to purchase?</small>","required" => 0),
-                                array("name" => "HomeOwner","label" => "<code>Home Owner</code><br /><small>Are you a home owner?</small>","required" => 0),
-                                array("name" => "ProductUse","label" => "<code>Product Use</code><br /><small>What is the primary reason you are considering purchase?</small>","required" => 0),
-                                array("name" => "TradeInMake","label" => "<code>Trade In Make</code>","required" => 0),
-                                array("name" => "TradeInYear","label" => "<code>Trade In Year</code>","required" => 0),
-                                array("name" => "Condition","label" => "<code>Trade In Condition</code>","required" => 0),
-                                array("name" => "PayoffLeft","label" => "<code>Payoff Left</code>","required" => 0),
-                            )
-                        ),
-                        
+                            "field_map" => array()
+                        )
                     )
                 ),
                 array(
@@ -299,12 +192,12 @@ if (class_exists("GFForms")) {
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
                             "field_map" => array(
-                                array("name" => "DeliveryMethod","label" => "<code>Delivery Method</code>","required" => 0),
-                                //array("name" => "Medium","label" => "Medium / Source","required" => 0),
-                                //array("name" => "KeyWords","label" => "Key Words","required" => 0),
-                                //array("name" => "PagesViewed","label" => "Pages Viewed","required" => 0),
-                                //array("name" => "PageViews","label" => "Page Views","required" => 0),
-                                //array("name" => "TimeOnSite","label" => "Time On Site","required" => 0),
+                                array("name" => "DeliveryMethod","label" => "Delivery Method","required" => 0),
+                                array("name" => "Medium","label" => "Medium / Source","required" => 0),
+                                array("name" => "KeyWords","label" => "Key Words","required" => 0),
+                                array("name" => "PagesViewed","label" => "Pages Viewed","required" => 0),
+                                array("name" => "PageViews","label" => "Page Views","required" => 0),
+                                array("name" => "TimeOnSite","label" => "Time On Site","required" => 0),
                             )
                         )
                     )
@@ -326,7 +219,6 @@ if (class_exists("GFForms")) {
             // add Custom Lead Source plugin settings field to feed settings field array
             if ( $this->get_plugin_setting('avala_customLeadSource') ) {
                 $custom_lead_source = explode( "\r\n", $this->get_plugin_setting('avala_customLeadSource') );
-                $a[0]['fields'][2]['choices'][] = array("label" => '--- Custom Lead Source(s) ---', "value" => '');
                 foreach ($custom_lead_source as $key => $value) {
                     $a[0]['fields'][2]['choices'][] = array("label" => $value, "value" => $value);
                 }
@@ -335,7 +227,6 @@ if (class_exists("GFForms")) {
             // add Custom Lead Category plugin settings field to feed settings field array
             if ( $this->get_plugin_setting('avala_customLeadCategory') ) {
                 $custom_lead_category = explode( "\r\n", $this->get_plugin_setting('avala_customLeadCategory') );
-                $a[0]['fields'][3]['choices'][] = array("label" => '--- Custom Lead Category(s) ---', "value" => '');
                 foreach ($custom_lead_category as $key => $value) {
                     $a[0]['fields'][3]['choices'][] = array("label" => $value, "value" => $value);
                 }
@@ -344,9 +235,16 @@ if (class_exists("GFForms")) {
             // add Custom Lead Type plugin settings field to feed settings field array
             if ( $this->get_plugin_setting('avala_customLeadType') ) {
                 $custom_lead_type = explode( "\r\n", $this->get_plugin_setting('avala_customLeadType') );
-                $a[0]['fields'][4]['choices'][] = array("label" => '--- Custom Lead Type(s) ---', "value" => '');
                 foreach ($custom_lead_type as $key => $value) {
                     $a[0]['fields'][4]['choices'][] = array("label" => $value, "value" => $value);
+                }
+            }
+
+            // add Custom Field Mapping plugin settings fields to feed settings field array
+            if ( $this->get_plugin_setting('avala_customFieldMapping') ) {
+                $custom_field_map = explode( "\r\n", $this->get_plugin_setting('avala_customFieldMapping') );
+                foreach ($custom_field_map as $key => $value) {
+                    $a[0]['fields'][7]['field_map'][] = array("name" => $value, "label" => $value, "required" => 0);
                 }
             }
 
@@ -418,54 +316,29 @@ if (class_exists("GFForms")) {
                         array(
                             "name"    => "avala_customLeadCategory",
                             "tooltip" => "Add your own Lead Category(ies), one per line",
-                            "label"   => "Custom Lead Category(ies)",
+                            "label"   => "Lead Category(ies)",
                             "type"    => "textarea",
                             "class"   => "small"
                         ),
                         array(
                             "name"    => "avala_customLeadSource",
                             "tooltip" => "Add your own Lead Source(s), one per line",
-                            "label"   => "Custom Lead Source(s)",
+                            "label"   => "Lead Source(s)",
                             "type"    => "textarea",
                             "class"   => "small"
                         ),
                         array(
                             "name"    => "avala_customLeadType",
                             "tooltip" => "Add your own Lead Type(s), one per line",
-                            "label"   => "Custom Lead Type(s)",
+                            "label"   => "Lead Type(s)",
                             "type"    => "textarea",
                             "class"   => "small"
                         ),
                         array(
-                            "name"    => "avala_customProductIdList",
-                            "tooltip" => "Add Product List in the form of<br />\"Product Name, Product ID#\"<br />(without quotes), one per line<br />Adds custom advanced field if used",
-                            "label"   => "Product ID List",
+                            "name"    => "avala_customFieldMapping",
+                            "tooltip" => "Add your own custom Field Mapping, one per line",
+                            "label"   => "Field Mapping",
                             "type"    => "textarea",
-                            "class"   => "small"
-                        ),
-                        array(
-                            "name"    => "avala_defaultOptInListId",
-                            "tooltip" => "ID(s) used for opt-in lists (provided by Avala)<br />Comma seperated values",
-                            "label"   => "Opt-In List ID(s)",
-                            "type"    => "text",
-                            "class"   => "small"
-                        ),
-                        array(
-                            "name"    => "avala_defaultCountry",
-                            "tooltip" => "Lead country will default to this value if no user entry<br/>Uses \"US\" if this field left blank",
-                            "label"   => "Default Country",
-                            "type"    => "radio",
-                            "class"   => "small",
-                            "choices" => array(
-                                array("label" => "United States (US)", "value" => "US"),
-                                array("label" => "Canada (CA)", "value" => "CA"),
-                            )
-                        ),
-                        array(
-                            "name"    => "avala_defaultPostalCode",
-                            "tooltip" => "Default postal code to be used if no user entry<br />Uses \"00000\" if this field left blank",
-                            "label"   => "Default Postal Code",
-                            "type"    => "text",
                             "class"   => "small"
                         ),
                         array(
@@ -601,33 +474,6 @@ if (class_exists("GFForms")) {
                 'RecieveEmailCampaigns'         => '',
                 'ReceiveNewsletter'             => '',
                 'ReceiveSmsCampaigns'           => '',
-                //mapped fields - addl data
-                'AccountId'                     => '',
-                'Brand'                         => '',
-                'Campaign'                      => '',
-                'CampaignId'                    => '',
-                'DealerId'                      => '',
-                'DealerNumber'                  => '',
-                'ExactTargetOptInListIds'       => ( $this->get_plugin_setting('avala_defaultOptInListId') ) ? $this->get_plugin_setting('avala_defaultOptInListId') : '',
-                'ExactTargetCustomAttributes'   => '',
-                'LeadDate'                      => '',
-                'ProductCode'                   => '',
-                'ProductIdList'                 => '',
-                'TriggeredSend'                 => '',
-                //mapped fields - custom data
-                'CustomData'                    => array(
-                    'BuyTimeFrame'              => '',
-                    'Condition'                 => '',
-                    'CurrentlyOwn'              => '',
-                    'HomeOwner'                 => '',
-                    'InterestedInOwning'        => '',
-                    'PayoffLeft'                => '',
-                    'ProductUse'                => '',
-                    'TradeInMake'               => '',
-                    'TradeInYear'               => '',
-                    'PromoCode'                 => '',
-                    'Event'                     => '',
-                    ),
                 //mapped fields - websession data
                 'WebSessionData'                => array(
                     'DeliveryMethod'            => '',
@@ -870,152 +716,6 @@ if (class_exists("GFForms")) {
 
     // Instantiate the class - this triggers everything, makes the magic happen
     $gfa = new GFAvalaAPIAddOn();
-
-
-    /**
-     *  Custom Gravity Form Fields
-     *
-     *  The following fields added are Avala specific fields
-     *
-     **/
-    if ( $gfa )
-    {
-        /**
-         *  Product ID List - Custom Advanced Field
-         *
-         */
-        if ( !empty( $gfa->_custom_product_id_list ) )
-        {
-            add_action( "gform_field_input" , "avala_field_product_id_input", 10, 5 );
-            function avala_field_product_id_input( $input, $field, $value, $lead_id, $form_id ) {
-                global $gfa;
-                if ( $field["type"] == "avalaFieldProductId" ) {
-                    $options = explode( "\r\n", $gfa->_custom_product_id_list );
-                    $opts = '';
-                    foreach ($options as $option) {
-                        $o = explode(',', $option);
-                        //$selected = ( trim($o[1]) == $value || trim($o[0]) == $value ) ? 'selected="selected"' : '';
-                        $opts .= '<option value="' . trim($o[1]) . '" >' . trim($o[0]) . '</option>';
-                    }
-                    $input_name = $form_id .'_' . $field["id"];
-                    $tabindex = GFCommon::get_tabindex();
-                    $css = isset( $field['cssClass'] ) ? $field['cssClass'] : '';
-                    return sprintf("<div class=\"ginput_container\"><select name=\"%s\" id=\"%s\" class=\"%s gfield_select\" $tabindex >%s</select></div>", 'input_'.$field["id"], 'input_'.$input_name, $field["type"] . ' ' . esc_attr( $css ) . ' ' . $field['size'], $opts);
-                }
-                return $input;
-            }
-        }
-
-        /**
-         *  Purchase Timeframe - Custom Advanced Field
-         *
-         */
-        add_action( "gform_field_input" , "avala_field_purchase_timeframe_input", 10, 5 );
-        function avala_field_purchase_timeframe_input( $input, $field, $value, $lead_id, $form_id )
-        {
-            if ( $field["type"] == "avalaFieldPurchaseTimeframe" ) {
-                $input_name = $form_id .'_' . $field["id"];
-                $tabindex = GFCommon::get_tabindex();
-                $css = isset( $field['cssClass'] ) ? $field['cssClass'] : '';
-                $opts = '<option value="">Not Selected</option>
-                        <option value="Within 1 month">Within 1 month</option>
-                        <option value="1-3 months">1-3 months</option>
-                        <option value="4-6 months">4-6 months</option>
-                        <option value="6+ months">6+ months</option>';
-                return sprintf("<div class=\"ginput_container\"><select name=\"%s\" id=\"%s\" class=\"%s gfield_select\" $tabindex >%s</select></div>", 'input_'.$field["id"], 'input_'.$input_name, $field["type"] . ' ' . esc_attr( $css ) . ' ' . $field['size'], $opts);
-            }
-            return $input;
-        }
-
-        /**
-         *  Product Use - Custom Advanced Field
-         *
-         */
-        add_action( "gform_field_input" , "avala_field_product_use_input", 10, 5 );
-        function avala_field_product_use_input( $input, $field, $value, $lead_id, $form_id )
-        {
-            if ( $field["type"] == "avalaFieldProductUse" ) {
-                $input_name = $form_id .'_' . $field["id"];
-                $tabindex = GFCommon::get_tabindex();
-                $css = isset( $field['cssClass'] ) ? $field['cssClass'] : '';
-                $opts = '<option value="">Not Selected</option>
-                        <option value="Relaxation">Relaxation</option>
-                        <option value="Pain Relief/Therapy">Pain Relief/Therapy</option>
-                        <option value="Bonding/Family">Bonding/Family</option>
-                        <option value="Backyard Entertaining">Backyard Entertaining</option>';
-                return sprintf("<div class=\"ginput_container\"><select name=\"%s\" id=\"%s\" class=\"%s gfield_select\" $tabindex >%s</select></div>", 'input_'.$field["id"], 'input_'.$input_name, $field["type"] . ' ' . esc_attr( $css ) . ' ' . $field['size'], $opts);
-            }
-            return $input;
-        }
-
-        /**
-         *  This code adds new buttons to the Advanced Fields section in form creator
-         */
-        add_filter("gform_add_field_buttons", "add_avala_product_id_field");
-        function add_avala_product_id_field($field_groups)
-        {
-            foreach($field_groups as &$group)
-            {
-                if($group["name"] == "advanced_fields")
-                {
-                    $group["fields"][] = array(
-                        "class"=>"button avala-button",
-                        "value" => __("Select Product", "avala-api-gforms-feed"),
-                        "onclick" => "StartAddField('avalaFieldProductId');"
-                        );
-                    $group["fields"][] = array(
-                        "class"=>"button avala-button",
-                        "value" => __("Buy Timeframe", "avala-api-gforms-feed"),
-                        "onclick" => "StartAddField('avalaFieldPurchaseTimeframe');"
-                        );
-                    $group["fields"][] = array(
-                        "class"=>"button avala-button",
-                        "value" => __("Product Use", "avala-api-gforms-feed"),
-                        "onclick" => "StartAddField('avalaFieldProductUse');"
-                        );
-                    break;
-                }
-            }
-            return $field_groups;
-        }
-
-        /**
-         *  This block sets the field display name (left side block title) in form creator
-         */
-        add_filter( 'gform_field_type_title' , 'avala_field_titles' );
-        function avala_field_titles( $type )
-        {
-            switch( $type )
-            {
-                case 'avalaFieldProductUse':
-                    return __( 'Select Product Use' , 'avala-api-gforms-feed' );
-                    break;
-                case 'avalaFieldPurchaseTimeframe':
-                    return __( 'Select Purchase Timeframe' , 'avala-api-gforms-feed' );
-                    break;
-                case 'avalaFieldProductId':
-                    return __( 'Select Product ID' , 'avala-api-gforms-feed' );
-                    break;
-            }
-        }
-
-        /*
-         *  Javascript technicalitites for the field to load correctly and to display default/custom field options
-         */
-        add_action( "gform_editor_js", "avala_field_gform_editor_js" );
-        function avala_field_gform_editor_js()
-        {
-            ?>
-            <script type='text/javascript'>
-                jQuery(document).ready(function($){
-                    fieldSettings["avalaFieldProductId"] = ".label_setting, .description_setting, .admin_label_setting, .size_setting, .error_message_setting, .css_class_setting, .visibility_setting, .avalaConditional_logic_field_setting";
-                    fieldSettings["avalaFieldProductUse"] = ".label_setting, .description_setting, .admin_label_setting, .size_setting, .error_message_setting, .css_class_setting, .visibility_setting, .avalaConditional_logic_field_setting";
-                    fieldSettings["avalaFieldPurchaseTimeframe"] = ".label_setting, .description_setting, .admin_label_setting, .size_setting, .error_message_setting, .css_class_setting, .visibility_setting, .avalaConditional_logic_field_setting";
-                });
-            </script>
-            <?php
-        }
-    }
 
 
     // Rewrite Gravity Forms field Country (select values) as Country Codes instead of country name :: eg CA instead of Canada
