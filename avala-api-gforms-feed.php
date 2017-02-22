@@ -172,7 +172,7 @@ if (class_exists("GFForms")) {
                         // Custom fields to map for individual Avala accounts
                         // you may add your own field mappings below
                         array(
-                            "name" => "avalaMappedFields_Custom",
+                            "name" => "avalaMappedFields_CustomData",
                             "label" => "Map Custom Fields",
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
@@ -480,6 +480,8 @@ if (class_exists("GFForms")) {
                 'RecieveEmailCampaigns'         => '',
                 'ReceiveNewsletter'             => '',
                 'ReceiveSmsCampaigns'           => '',
+                //mapped fields - custom data
+                'CustomData'                    => array(),
                 //mapped fields - websession data
                 'WebSessionData'                => array(
                     'DeliveryMethod'            => '',
@@ -499,7 +501,7 @@ if (class_exists("GFForms")) {
             foreach ($feed['meta'] as $k => $v) {
                 $l = explode("_", $k);
                 if ( $l[0] == 'avalaMappedFields' ) {
-                    if ( $l[1] == 'CustomData' && array_key_exists( $l[2], $jsonArray['CustomData'] ) && !empty( $v ) ) :
+                    if ( $l[1] == 'CustomData' && !empty( $v ) ) :
                         $jsonArray['CustomData'][ $l[2] ] = $entry[ $v ];
                     elseif ( $l[1] == 'WebSession' && array_key_exists( $l[2], $jsonArray['WebSessionData'] ) && !empty( $v ) ) :
                         $jsonArray['WebSessionData'][ $l[2] ] = $entry[ $v ];
