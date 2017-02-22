@@ -16,4 +16,10 @@ This plugin requires a subscription to Aimbase CRM that supports API POSTs, as w
 
 ## Notes ##
 
-This plugin is not officially supported by Avala. They, however, do not have any such plugin of their own. So you can (most likely) use this!
+This plugin is not officially supported (or appreciated) by Avala. They, however, do not have any such plugin of their own. So you can use this!
+
+Monkishtypist offers zero warranty or support around this plugin. Some customization may be necessary for your instance.
+
+## Customize this plugin ##
+
+You can hard-code field mappings to match your needs. Simple edit the `feed_settings_fields` array in `avala-api-gforms-feed.php` around line 89.

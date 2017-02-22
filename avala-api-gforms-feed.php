@@ -111,6 +111,7 @@ if (class_exists("GFForms")) {
                                 array("label" => "None (do not submit to Avala)", "value" => 0),
                             )
                         ),
+                        // Lead source, category, and type can all be added in plugin settings, you may also hard-code choices below
                         array(
                             "label"   => "Lead Source",
                             "type"    => "select",
@@ -138,6 +139,7 @@ if (class_exists("GFForms")) {
                                 array("label" => get_bloginfo('name'))
                             ),
                         ),
+                        // Contact and Address info may not be relevant to your account, and may be ignored in field mappings if this is the case
                         array(
                             "name" => "avalaMappedFields_Contact",
                             "label" => "Map Contact Fields",
@@ -167,12 +169,16 @@ if (class_exists("GFForms")) {
                                 array("name" => "PostalCode","label" => "Zip / Postal Code","required" => 0),
                             )
                         ),
+                        // Custom fields to map for individual Avala accounts
+                        // you may add your own field mappings below
                         array(
                             "name" => "avalaMappedFields_Custom",
                             "label" => "Map Custom Fields",
                             "type" => "field_map",
                             "tooltip" => "Map each Avala Field to Gravity Form Field",
-                            "field_map" => array()
+                            "field_map" => array(
+                                // array("name" => "SampleAvalaField","label" => "Sample Avala Field","required" => 0)
+                                )
                         )
                     )
                 ),
