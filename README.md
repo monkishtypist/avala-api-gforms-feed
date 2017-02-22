@@ -16,4 +16,4 @@ This plugin requires a subscription to Aimbase CRM that supports API POSTs, as w
 
 ## Notes ##
 
-This plugin is not officially supported by Avala. They, however, do not have any such plugin of their own. So use this!
+This plugin is not officially supported by Avala. They, however, do not have any such plugin of their own. So you can (most likely) use this!
